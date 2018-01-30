@@ -1,0 +1,9 @@
+<ActionBar class="action-bar">
+    <Label text="Initial setup"></Label>
+</ActionBar>
+<StackLayout orientation="vertical" class="page page-content center">
+    <StackLayout orientation="vertical" class="inner">
+        <TextField class="element" hint="username (without @)" returnKeyType="done" autocorrect="false" (blur)="onBlur($event)" (textChange)="onBlur($event)" (returnPress)="onBlur($event)"></TextField>
+        <Button class="element button" text="Save" (tap)="onSave($event)"></Button>
+    </StackLayout>
+</StackLayout>

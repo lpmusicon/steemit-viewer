@@ -1,0 +1,29 @@
+<ActionBar class="action-bar">
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+        ios.position="left">
+    </ActionItem>
+    <Label class="action-bar-title" text="My Feed"></Label>
+</ActionBar>
+
+<RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
+    <StackLayout tkDrawerContent>
+        <MyDrawer [selectedPage]="'Home'"></MyDrawer>
+    </StackLayout>
+    <StackLayout orientation="vertical" class="page page-content" tkMainContent>
+        <RadListView [items]="currentFeed" loadOnDemandMode="Auto" (itemTap)="setPost($event)" (loadMoreDataRequested)="onLoadMoreItemsRequested($event)">
+            <ng-template tkListItemTemplate let-item="item">
+                <StackLayout orientation="vertical" class="feedItem">
+                    <StackLayout class="topBar" orientation="horizontal">
+                        <Image class="avatarImage" src="https://steemitimages.com/u/{{ item.author }}/avatar"></Image>
+                        <Label class="center" [text]="item?.author" textWrap="true"></Label>
+                        <Label class="center" text=" ({{ item.author_reputation_formatted }})"></Label>
+                    </StackLayout>
+                    <Image [src]="item.thumbnail"></Image>
+                    <Label class="nameLabel" [text]="item.title"></Label>
+                    <Label class="descLabel" [text]="item.body"></Label>
+                </StackLayout>
+            </ng-template>
+        </RadListView>
+    </StackLayout>
+</RadSideDrawer>

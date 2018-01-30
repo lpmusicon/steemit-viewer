@@ -1,0 +1,21 @@
+<!--
+The MyDrawer custom component view is where you define what will be displayed in the app drawer.
+Feel free to customize layouts and components to change how your app drawer looks.
+-->
+<GridLayout rows="auto, *" class="sidedrawer sidedrawer-left">
+    <StackLayout row="0" class="test sidedrawer-header">
+        <Image class="sidedrawer-header-image" src="https://steemitimages.com/u/{{ account }}/avatar"></Image>
+        <Label class="sidedrawer-header-brand" text="{{ account }} ({{ reputation }})" textWrap="true"></Label>
+        <Label class="footnote" text="@{{ account }}"></Label>
+    </StackLayout>
+
+    <ScrollView row="1">
+        <StackLayout class="sidedrawer-content">
+            <MyDrawerItem title="Feed" route="/home" icon="&#xf015;" [isSelected]="isPageSelected('Home')">
+            </MyDrawerItem>
+            <StackLayout class="hr-light"></StackLayout>
+            <MyDrawerItem title="Settings" route="/settings" icon="&#xf013;" [isSelected]="isPageSelected('Settings')">
+            </MyDrawerItem>
+        </StackLayout>
+    </ScrollView>
+</GridLayout>
