@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import { DATA } from './steem.feed.data';
-import { ACCOUNT } from './steem.account.data';
 
 import { FeedInterface, FeedElementInterface } from './steem/feed.interface';
 import { AccountsInterface } from './steem/account.interface';

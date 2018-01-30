@@ -1,8 +1,8 @@
 {
   "description": "Steemit Viewer",
-  "license": "SEE LICENSE IN <your-license-filename>",
-  "readme": "NativeScript Application",
-  "repository": "<fill-your-repository-here>",
+  "license": "Not sure yet",
+  "readme": "Not yet completed",
+  "repository": "lpmusicon/steemit-viewer",
   "nativescript": {
     "id": "org.nativescript.steemittest",
     "tns-android": {
