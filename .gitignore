@@ -10,3 +10,6 @@ platforms/
 tmp/
 typings/
 report/
+my-release-key\.jks
+
+steemit\.aligned\.apk
