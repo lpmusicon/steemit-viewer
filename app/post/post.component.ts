@@ -41,8 +41,6 @@ export class PostComponent implements OnInit {
         this._sideDrawerTransition = new SlideInOnTopTransition();
         this.pageRoute.activatedRoute.subscribe((Route) => {
             Route.params.subscribe((params: PostInterface) => {
-                console.log(params.author);
-                console.log(params.perm);
                 this.Post = this.steem.getPost();
                 this.body = this.Post.body;
             })

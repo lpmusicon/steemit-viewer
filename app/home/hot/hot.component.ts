@@ -44,6 +44,8 @@ export class HotComponent implements OnInit {
         this.steem.getHot(this.currentTag).subscribe((data: FeedInterface) => {
             this.feedUtility.formatFeedData(data.result);
             this.currentFeed = new ObservableArray(data.result);
+        }, (error) => {
+            console.log('BACK OFF');
         });
     }
 

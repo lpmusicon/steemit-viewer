@@ -11,10 +11,27 @@ export class FeedUtilityService
         private steem: SteemService
     ) {}
 
+    public getAuthorReputation(reputation: string): number
+    {
+        const rep = parseInt(reputation);
+        const absRep = Math.abs(rep);
+        let out = Math.log10(absRep);
+        if (isNaN(out)) out = 0;
+        out = Math.max(out - 9, 0);
+
+        if(rep < 0) {
+            console.log('Negative', out);
+            out *= -1;
+        }
+        out = out * 9 + 25;
+        out = Math.floor(out);
+        return out;
+    }
+
     public formatFeedData(feed: FeedElementInterface[]): void
     {
         feed.forEach((feedElement: FeedElementInterface) => {
-            feedElement.author_reputation_formatted = this.steem.getAuthorReputation(feedElement.author_reputation);
+            feedElement.author_reputation_formatted = this.getAuthorReputation(feedElement.author_reputation);
             let FoundThumbnail = false;
 
             const MarkdownImageRegex = /!\[.*?\]\((.*?)\)/;

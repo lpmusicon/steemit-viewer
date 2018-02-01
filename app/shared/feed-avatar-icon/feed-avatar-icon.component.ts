@@ -11,9 +11,15 @@ import { AccountsInterface } from "./../../steem/account.interface";
 export class FeedAvatarIconComponent implements OnInit {
     @Input() src: string;
 
+    public avatarURL: string;
+    public placeholder: string;
+
     public ngOnInit(): void {
-        console.log(this.src);
+        this.avatarURL = `https://steemitimages.com/u/${this.src}/avatar`;;
     }
 
-    constructor() {}
+    constructor() {
+        this.placeholder = "res://ic_account_circle_white_48dp";
+        this.avatarURL = "";
+    }
 }

@@ -3,8 +3,8 @@ The MyDrawer custom component view is where you define what will be displayed in
 Feel free to customize layouts and components to change how your app drawer looks.
 -->
 <GridLayout rows="auto, *" class="sidedrawer sidedrawer-left">
-    <StackLayout row="0" #background class="sidedrawer-header" [ngStyle]="{'background-image': backgroundURL }">
-        <WebImage rounded="true" class="sidedrawer-header-image" stretch="aspectFill" src="https://steemitimages.com/u/{{ account }}/avatar"></WebImage>
+    <StackLayout row="0" class="sidedrawer-header" [ngStyle]="{'background-image': backgroundURL }">
+        <WebImage rounded="true" class="sidedrawer-header-image" [src]="avatarURL" [placeholder]="avatarPlaceholder"></WebImage>
         <StackLayout class="header-text" orientation="vertical">
             <Label class="sidedrawer-header-brand" text="{{ account }} ({{ reputation }})" textWrap="true"></Label>
             <Label class="footnote" text="@{{ account }}"></Label>

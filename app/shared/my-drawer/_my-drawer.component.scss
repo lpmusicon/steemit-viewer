@@ -26,6 +26,8 @@ $sidedrawer-header-image-offset-bottom: 5;
 
     .sidedrawer-header {
         background-color: $ab-background;
+        background-size: cover;
+        background-position: center;
         margin: 0;
         padding-left: 0;
         padding-right: 0;

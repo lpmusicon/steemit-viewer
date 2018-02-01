@@ -17,14 +17,16 @@ interface ParamsInterface {
 export class SteemService
 {
     private SteemitAPI: string;
+    private currentLimit: number;
     constructor(private http: HttpClient) {
         this.SteemitAPI = 'https://api.steemit.com';
+        this.currentLimit = 11;
     }
 
     public getNew(tag: string = "", start_author: string = "", start_permlink: string = ""): Observable<FeedInterface>
     {
         let PARAMS = {
-            "limit": 6,
+            "limit": this.currentLimit,
             "tag": tag
         } as ParamsInterface;
 
@@ -44,7 +46,7 @@ export class SteemService
     public getTrending(tag: string = "", start_author: string = "", start_permlink: string = ""): Observable<FeedInterface>
     {
         let PARAMS = {
-            "limit": 6,
+            "limit": this.currentLimit,
             "tag": tag
         } as ParamsInterface;
 
@@ -64,7 +66,7 @@ export class SteemService
     public getHot(tag: string = "", start_author: string = "", start_permlink: string = ""): Observable<FeedInterface>
     {
         let PARAMS = {
-            "limit": 6,
+            "limit": this.currentLimit,
             "tag": tag
         } as ParamsInterface;
 
@@ -91,7 +93,7 @@ export class SteemService
             "method": "get_discussions_by_feed",
             "params": [{
                 "tag": this.getAccountName(),
-                "limit": 6,
+                "limit": this.currentLimit,
                 "start_author": start_author,
                 "start_permlink": start_permlink
             }]
@@ -138,11 +140,6 @@ export class SteemService
 
     public getAccountBackground(): string {
         return SteemService.accountBackground;
-    }
-
-    public getAuthorReputation(reputation: string): number
-    {
-        return Math.floor((Math.log10(parseInt(reputation)) - 9)*9+25);
     }
 
     public resetAll(): void {

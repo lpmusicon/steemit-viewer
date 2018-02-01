@@ -20,12 +20,12 @@
             <ng-template tkListItemTemplate let-item="item">
                 <StackLayout orientation="vertical" class="feedItem">
                     <StackLayout class="topBar" orientation="horizontal">
-                        <FeedAvatarIcon [src]="item.author"></FeedAvatarIcon>
+                        <FeedAvatarIcon [src]="item?.author"></FeedAvatarIcon>
                         <Label class="center" [text]="item?.author" textWrap="true"></Label>
                         <Label class="center" [text]="' ('+item.author_reputation_formatted+')'"></Label>
                         <ScrollView class="center tag-container" orientation="horizontal">
                             <StackLayout orientation="horizontal">
-                                <Label class="tag" *ngFor="let tag of item.metadata.tags" [text]="' ' + tag + ' '" (tap)="onTag($event, tag)"></Label>
+                                <Label class="tag" *ngFor="let tag of item?.metadata.tags" [text]="' ' + tag + ' '" (tap)="onTag($event, tag)"></Label>
                             </StackLayout>
                         </ScrollView>
                     </StackLayout>

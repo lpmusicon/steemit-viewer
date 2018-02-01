@@ -50,7 +50,6 @@ export class FeedComponent implements OnInit {
 
     public onLoadMore(event: ListViewEventData) {
         const LastFromFeed = this.currentFeed.getItem(this.currentFeed.length - 1) as FeedElementInterface;
-        console.log('Author: ', LastFromFeed.author, 'PermLink: ', LastFromFeed.permlink);
         this.steem.getFeed(LastFromFeed.author, LastFromFeed.permlink).subscribe((feed: FeedInterface) => {
             feed.result.shift(); //Removing duplicate element
             this.feedUtility.formatFeedData(feed.result);
