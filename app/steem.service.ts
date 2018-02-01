@@ -6,19 +6,51 @@ import { FeedInterface, FeedElementInterface } from './steem/feed.interface';
 import { AccountsInterface } from './steem/account.interface';
 import * as ApplicationSettings from "application-settings";
 
+interface ParamsInterface {
+    limit: number;
+    tag: string;
+    start_author?: string;
+    start_permlink?: string;
+}
+
 @Injectable()
 export class SteemService
 {
-    constructor(private http: HttpClient) {}
+    private SteemitAPI: string;
+    constructor(private http: HttpClient) {
+        this.SteemitAPI = 'https://api.steemit.com';
+    }
+
+    public getHot(tag: string = "", start_author: string = "", start_permlink: string = ""): Observable<FeedInterface>
+    {
+        let PARAMS = {
+            "limit": 6,
+            "tag": tag
+        } as ParamsInterface;
+
+        if(start_author.length > 0 && start_permlink.length > 0) {
+            PARAMS.start_author = start_author;
+            PARAMS.start_permlink = start_permlink;
+        }
+
+        console.log(JSON.stringify(PARAMS));
+
+        return this.http.post<FeedInterface>(this.SteemitAPI, {
+            "id": 2,
+            "jsonrpc": "2.0",
+            "method": "get_discussions_by_hot",
+            "params": [PARAMS]
+        });
+    }
 
     public getFeed(start_author: string = "", start_permlink: string = ""): Observable<FeedInterface>
     {
-        return this.http.post<FeedInterface>('https://api.steemit.com', {
+        return this.http.post<FeedInterface>(this.SteemitAPI, {
             "id": 1, 
             "jsonrpc":"2.0",
             "method": "get_discussions_by_feed",
             "params": [{
-                "tag": "lpmusicon",
+                "tag": this.getAccountName(),
                 "limit": 6,
                 "start_author": start_author,
                 "start_permlink": start_permlink

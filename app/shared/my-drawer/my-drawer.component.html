@@ -11,11 +11,10 @@ Feel free to customize layouts and components to change how your app drawer look
 
     <ScrollView row="1">
         <StackLayout class="sidedrawer-content">
-            <MyDrawerItem title="Feed" route="/home" icon="&#xf015;" [isSelected]="isPageSelected('Home')">
-            </MyDrawerItem>
+            <MyDrawerItem title="Feed" route="/home" icon="&#xf015;" [isSelected]="isPageSelected('Feed')"></MyDrawerItem>
+            <MyDrawerItem title="Hot" route="/home/hot" icon="&#xf06d;" [isSelected]="isPageSelected('Hot')"></MyDrawerItem>
             <StackLayout class="hr-light"></StackLayout>
-            <MyDrawerItem title="Settings" route="/settings" icon="&#xf013;" [isSelected]="isPageSelected('Settings')">
-            </MyDrawerItem>
+            <MyDrawerItem title="Settings" route="/settings" icon="&#xf013;" [isSelected]="isPageSelected('Settings')"></MyDrawerItem>
         </StackLayout>
     </ScrollView>
 </GridLayout>

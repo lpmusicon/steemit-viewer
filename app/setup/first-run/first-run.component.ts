@@ -28,6 +28,7 @@ export class FirstRunComponent implements OnInit {
         this.page.style.backgroundPosition = "center";
         this.page.style.backgroundSize = "cover";
         this.page.style.backgroundRepeat = "no-repeat";
+        this.page.actionBarHidden = true;
     }
 
     public onSave(event: EventData): void {

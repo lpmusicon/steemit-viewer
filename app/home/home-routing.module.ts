@@ -3,9 +3,12 @@ import { Routes } from "@angular/router";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 
 import { HomeComponent } from "./home.component";
+import { FeedComponent } from "./feed/feed.component";
+import { HotComponent } from './hot/hot.component';
 
 const routes: Routes = [
-    { path: "", component: HomeComponent }
+    { path: "", component: FeedComponent },
+    { path: "hot", component: HotComponent}
 ];
 
 @NgModule({
