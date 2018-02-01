@@ -11,7 +11,9 @@ import { AccountsInterface } from "./../../steem/account.interface";
 export class FeedAvatarIconComponent implements OnInit {
     @Input() src: string;
 
-    ngOnInit(): void {}
+    public ngOnInit(): void {
+        console.log(this.src);
+    }
 
     constructor() {}
 }
