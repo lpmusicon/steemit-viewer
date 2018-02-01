@@ -21,6 +21,26 @@ export class SteemService
         this.SteemitAPI = 'https://api.steemit.com';
     }
 
+    public getNew(tag: string = "", start_author: string = "", start_permlink: string = ""): Observable<FeedInterface>
+    {
+        let PARAMS = {
+            "limit": 6,
+            "tag": tag
+        } as ParamsInterface;
+
+        if(start_author.length > 0 && start_permlink.length > 0) {
+            PARAMS.start_author = start_author;
+            PARAMS.start_permlink = start_permlink;
+        }
+
+        return this.http.post<FeedInterface>(this.SteemitAPI, {
+            "id": 2,
+            "jsonrpc": "2.0",
+            "method": "get_discussions_by_created",
+            "params": [PARAMS]
+        });
+    }
+
     public getTrending(tag: string = "", start_author: string = "", start_permlink: string = ""): Observable<FeedInterface>
     {
         let PARAMS = {

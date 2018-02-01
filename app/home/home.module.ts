@@ -7,7 +7,7 @@ import { HomeComponent } from "./home.component";
 import { FeedComponent } from "./feed/feed.component";
 import { HotComponent } from './hot/hot.component';
 import { TrendingComponent } from './trending/trending.component';
-
+import { NewComponent } from './new/new.component';
 import { FeedUtilityService } from './feed-utility.service';
 
 @NgModule({
@@ -20,7 +20,8 @@ import { FeedUtilityService } from './feed-utility.service';
         HomeComponent,
         FeedComponent,
         HotComponent,
-        TrendingComponent
+        TrendingComponent,
+        NewComponent
     ],
     providers: [
         FeedUtilityService

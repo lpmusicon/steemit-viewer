@@ -1,0 +1,38 @@
+<ActionBar class="action-bar">
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+        ios.position="left">
+    </ActionItem>
+    <Label class="action-bar-title" [text]="pageName"></Label>
+</ActionBar>
+
+<RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
+    <StackLayout tkDrawerContent><MyDrawer [selectedPage]="pageName"></MyDrawer></StackLayout>
+    <StackLayout orientation="vertical" tkMainContent>
+        <StackLayout *ngIf="currentTag !== ''" class="filter" orientation="horizontal">
+            <Label class="text" text="Browsing tag: "></Label>
+            <StackLayout (tap)="onTagReset()" orientation="horizontal">
+                <Label class="tag" [text]="currentTag" textWrap="true"></Label>
+                <Label class="fa center icon" text="&#xf057;"></Label>
+            </StackLayout>
+        </StackLayout>
+        <RadListView loadOnDemandMode="Auto" [items]="currentFeed" (itemTap)="onClick($event)" (loadMoreDataRequested)="onLoadMore($event)">
+            <ng-template tkListItemTemplate let-item="item">
+                <StackLayout orientation="vertical" class="feedItem">
+                    <StackLayout class="topBar" orientation="horizontal">
+                        <FeedAvatarIcon [src]="item.author"></FeedAvatarIcon>
+                        <Label class="center" [text]="item?.author" textWrap="true"></Label>
+                        <Label class="center" [text]="' ('+item.author_reputation_formatted+')'"></Label>
+                        <ScrollView class="center tag-container" orientation="horizontal">
+                            <StackLayout orientation="horizontal">
+                                <Label class="tag" *ngFor="let tag of item.metadata.tags" [text]="' ' + tag + ' '" (tap)="onTag($event, tag)"></Label>
+                            </StackLayout>
+                        </ScrollView>
+                    </StackLayout>
+                    <FeedThumbnail [src]="item.thumbnail"></FeedThumbnail>
+                    <Label class="nameLabel" [text]="item.title" textWrap="true"></Label>
+                </StackLayout>
+            </ng-template>
+        </RadListView>
+    </StackLayout>
+</RadSideDrawer>

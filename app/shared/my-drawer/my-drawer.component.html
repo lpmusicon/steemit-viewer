@@ -3,8 +3,8 @@ The MyDrawer custom component view is where you define what will be displayed in
 Feel free to customize layouts and components to change how your app drawer looks.
 -->
 <GridLayout rows="auto, *" class="sidedrawer sidedrawer-left">
-    <StackLayout row="0" class="test sidedrawer-header">
-        <Image class="sidedrawer-header-image" src="https://steemitimages.com/u/{{ account }}/avatar"></Image>
+    <StackLayout row="0" #background class="background sidedrawer-header">
+        <WebImage rounded="true" class="sidedrawer-header-image" src="https://steemitimages.com/u/{{ account }}/avatar"></WebImage>
         <Label class="sidedrawer-header-brand" text="{{ account }} ({{ reputation }})" textWrap="true"></Label>
         <Label class="footnote" text="@{{ account }}"></Label>
     </StackLayout>
@@ -14,6 +14,7 @@ Feel free to customize layouts and components to change how your app drawer look
             <MyDrawerItem title="Feed" route="/home" icon="&#xf015;" [isSelected]="isPageSelected('Feed')"></MyDrawerItem>
             <MyDrawerItem title="Hot" route="/home/hot" icon="&#xf06d;" [isSelected]="isPageSelected('Hot')"></MyDrawerItem>
             <MyDrawerItem title="Trending" route="/home/trending" icon="&#xf102;" [isSelected]="isPageSelected('Trending')"></MyDrawerItem>
+            <MyDrawerItem title="New" route="/home/new" icon="&#xf102;" [isSelected]="isPageSelected('New')"></MyDrawerItem>
             <StackLayout class="hr-light"></StackLayout>
             <MyDrawerItem title="Settings" route="/settings" icon="&#xf013;" [isSelected]="isPageSelected('Settings')"></MyDrawerItem>
         </StackLayout>

@@ -1,0 +1,47 @@
+StackLayout.filter {
+    padding: 16;
+    Label.text {
+        font-size: 16;
+    }
+
+    Label.tag {
+        font-size: 16;
+        color: #6666FF;
+    }
+
+    Label.icon {
+        font-size: 18;
+        color: #6666FF;
+        margin: 0 5;
+    }
+}
+
+StackLayout.feedItem {
+    margin: 16;
+    border-radius: 1;
+    border-width: 1;
+    border-color: #CCCCCC;
+
+    StackLayout.topBar {
+        .tag-container {
+            margin: 0 6 0 12;
+
+            .tag {
+                font-weight: 300;
+                padding: 5;
+                margin: 0 2 0 2;
+                color: #6666FF;
+                vertical-align: center;
+            }
+        }
+    }
+    .nameLabel {
+        font-size: 18;
+        margin: 8;
+    }
+}
+
+.center {
+    vertical-align: center;
+    width: auto;
+}
