@@ -6,6 +6,7 @@ import { HomeRoutingModule } from "./home-routing.module";
 import { HomeComponent } from "./home.component";
 import { FeedComponent } from "./feed/feed.component";
 import { HotComponent } from './hot/hot.component';
+import { TrendingComponent } from './trending/trending.component';
 
 import { FeedUtilityService } from './feed-utility.service';
 
@@ -18,7 +19,8 @@ import { FeedUtilityService } from './feed-utility.service';
     declarations: [
         HomeComponent,
         FeedComponent,
-        HotComponent
+        HotComponent,
+        TrendingComponent
     ],
     providers: [
         FeedUtilityService
