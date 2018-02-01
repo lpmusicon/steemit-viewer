@@ -1,8 +1,7 @@
 @import 'my-drawer.component';
 
-// Place any CSS rules you want to apply only on Android here
-
-.test {
-    background-image: url("https://steemitimages.com/2048x512/http://kpa.ct8.pl/lpm.jpg");
-    width: 100%;
+.sidedrawer-header {
+    background-position: center;
+    // background-size: cover;
+    background-repeat: no-repeat;
 }

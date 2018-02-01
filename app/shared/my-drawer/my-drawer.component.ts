@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { SteemService } from './../../steem.service';
+import { FeedUtilityService } from './../../home/feed-utility.service';
 import { AccountsInterface } from "./../../steem/account.interface";
+import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout/stack-layout";
 
 /* ***********************************************************
 * Keep data that is displayed in your app drawer in the MyDrawer component class.
@@ -13,32 +15,33 @@ import { AccountsInterface } from "./../../steem/account.interface";
     styleUrls: ["./my-drawer.component.scss"]
 })
 export class MyDrawerComponent implements OnInit {
-    /* ***********************************************************
-    * The "selectedPage" is a component input property.
-    * It is used to pass the current page title from the containing page component.
-    * You can check how it is used in the "isPageSelected" function below.
-    *************************************************************/
     @Input() selectedPage: string;
 
-    ngOnInit(): void {
-        this.steem.getAccount(this.steem.getAccountName()).subscribe((res: AccountsInterface) => {
-            this.account = res.result[0].name;
-            this.reputation = this.steem.getAuthorReputation(res.result[0].reputation);
-            res.result[0].metadata = JSON.parse(res.result[0].json_metadata);
-            this.backgroundImage = res.result[0].metadata.profile.cover_image;
-        });
-    }
-
-    constructor(private steem: SteemService) {}
-    public backgroundImage: string;
+    public backgroundURL: string;
+    public avatarPlaceholder: string;
+    public avatarURL: string;
     public account: string;
     public reputation: number;
 
-    /* ***********************************************************
-    * The "isPageSelected" function is bound to every navigation item on the <MyDrawerItem>.
-    * It is used to determine whether the item should have the "selected" class.
-    * The "selected" class changes the styles of the item, so that you know which page you are on.
-    *************************************************************/
+    public ngOnInit(): void {
+        this.steem.getAccount(this.steem.getAccountName()).subscribe((res: AccountsInterface) => {
+            this.account = res.result[0].name;
+            this.reputation = this.feedUtility.getAuthorReputation(res.result[0].reputation);
+            res.result[0].metadata = JSON.parse(res.result[0].json_metadata);
+            const Prefix = "https://steemitimages.com/1024x256/";
+            const Bg = `url('${Prefix}${res.result[0].metadata.profile.cover_image}')`;
+            this.backgroundURL = Bg;
+            this.avatarURL = `https://steemitimages.com/u/${this.account}/avatar`;
+        });
+    }
+
+    constructor(
+        private steem: SteemService, 
+        private feedUtility: FeedUtilityService) {
+            this.avatarPlaceholder = "res://ic_account_circle_white_48dp";
+        }
+   
+
     isPageSelected(pageTitle: string): boolean {
         return pageTitle === this.selectedPage;
     }

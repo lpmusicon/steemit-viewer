@@ -14,8 +14,6 @@ export class IsSetupCompletedGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const AccountName = ApplicationSettings.getString('accountName', null);
-    console.log('Acc Name: ', AccountName);
-
     if(AccountName === null) {
         this.router.navigate(['/setup/first-run']);
         return false;

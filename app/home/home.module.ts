@@ -3,9 +3,11 @@ import { NativeScriptCommonModule } from "nativescript-angular/common";
 
 import { SharedModule } from "../shared/shared.module";
 import { HomeRoutingModule } from "./home-routing.module";
-import { HomeComponent } from "./home.component";
+import { FeedComponent } from "./feed/feed.component";
+import { HotComponent } from './hot/hot.component';
+import { TrendingComponent } from './trending/trending.component';
+import { NewComponent } from './new/new.component';
 
-import { SteemService } from "./../steem.service";
 
 @NgModule({
     imports: [
@@ -14,8 +16,12 @@ import { SteemService } from "./../steem.service";
         SharedModule
     ],
     declarations: [
-        HomeComponent
+        FeedComponent,
+        HotComponent,
+        TrendingComponent,
+        NewComponent
     ],
+    providers: [],
     schemas: [
         NO_ERRORS_SCHEMA
     ]

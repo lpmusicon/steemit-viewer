@@ -10,8 +10,8 @@
         ios.position="left">
     </ActionItem>
     <StackLayout orientation="horizontal" class="topBar">
-        <Image class="avatarImage" src="https://steemitimages.com/u/{{ Post.author }}/avatar"></Image>
-        <Label class="center" [text]="Post.author"></Label>
+        <Image class="avatarImage" src="https://steemitimages.com/u/{{ Post?.author }}/avatar"></Image>
+        <Label class="center" [text]="Post?.author"></Label>
     </StackLayout>
 </ActionBar>
 
@@ -27,7 +27,7 @@ it shouldn't have any other siblings other than the <ActionBar> component.
     Use the tkDrawerContent directive to display the content of the app drawer on this page.
     -->
     <StackLayout tkDrawerContent>
-        <MyDrawer [selectedPage]="'Home'"></MyDrawer>
+        <MyDrawer [selectedPage]=""></MyDrawer>
     </StackLayout>
     
     <!--

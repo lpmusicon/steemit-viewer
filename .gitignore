@@ -13,3 +13,7 @@ report/
 my-release-key\.jks
 
 steemit\.aligned\.apk
+
+app/App_Resources/Android/drawable-hdpi/Thumbs\.db
+
+*.db

@@ -7,6 +7,8 @@ import { AppComponent } from "./app.component";
 
 import { IsSetupCompletedGuard } from "./guards/is-setup-completed.guard";
 import { SteemService } from "./steem.service";
+import { FeedUtilityService } from './home/feed-utility.service';
+
 @NgModule({
     bootstrap: [
         AppComponent
@@ -21,6 +23,7 @@ import { SteemService } from "./steem.service";
     ],
     providers: [
         IsSetupCompletedGuard,
+        FeedUtilityService,
         SteemService
     ],
     schemas: [

@@ -7,21 +7,23 @@
 </ActionBar>
 
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
-    <StackLayout tkDrawerContent>
-        <MyDrawer [selectedPage]="'Home'"></MyDrawer>
-    </StackLayout>
+    <StackLayout tkDrawerContent><MyDrawer [selectedPage]="pageName"></MyDrawer></StackLayout>
     <StackLayout orientation="vertical" class="page page-content" tkMainContent>
-        <RadListView [items]="currentFeed" loadOnDemandMode="Auto" (itemTap)="setPost($event)" (loadMoreDataRequested)="onLoadMoreItemsRequested($event)">
+        <RadListView [items]="currentFeed" loadOnDemandMode="Auto" (itemTap)="setPost($event)" (loadMoreDataRequested)="onLoadMore($event)">
             <ng-template tkListItemTemplate let-item="item">
                 <StackLayout orientation="vertical" class="feedItem">
                     <StackLayout class="topBar" orientation="horizontal">
-                        <Image class="avatarImage" src="https://steemitimages.com/u/{{ item.author }}/avatar"></Image>
+                        <FeedAvatarIcon [src]="item?.author"></FeedAvatarIcon>
                         <Label class="center" [text]="item?.author" textWrap="true"></Label>
                         <Label class="center" text=" ({{ item.author_reputation_formatted }})"></Label>
+                        <ScrollView class="center tag-container" orientation="horizontal">
+                            <StackLayout orientation="horizontal">
+                                <Label class="tag" *ngFor="let tag of item?.metadata.tags" [text]="' ' + tag + ' '"></Label>
+                            </StackLayout>
+                        </ScrollView>
                     </StackLayout>
-                    <Image [src]="item.thumbnail"></Image>
-                    <Label class="nameLabel" [text]="item.title"></Label>
-                    <Label class="descLabel" [text]="item.body"></Label>
+                    <FeedThumbnail [src]="item.thumbnail"></FeedThumbnail>
+                    <Label class="nameLabel" [text]="item.title" textWrap="true"></Label>
                 </StackLayout>
             </ng-template>
         </RadListView>

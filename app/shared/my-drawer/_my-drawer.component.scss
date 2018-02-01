@@ -14,6 +14,7 @@ $sidedrawer-header-image-offset-bottom: 5;
             width: $sidedrawer-header-image-size;
             font-size: $sidedrawer-header-image-size;
             padding: 0;
+            margin-left: 16;
             margin-bottom: $sidedrawer-header-image-offset-bottom;
             margin-top: $sidedrawer-header-image-offset-top;
         }
@@ -25,6 +26,17 @@ $sidedrawer-header-image-offset-bottom: 5;
 
     .sidedrawer-header {
         background-color: $ab-background;
+        background-size: cover;
+        background-position: center;
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+        
+        .header-text {
+            background: rgba(0,0,0,.6);
+            padding: 4 16;
+        }
 
         .sidedrawer-header-brand {
             color: $ab-color;
