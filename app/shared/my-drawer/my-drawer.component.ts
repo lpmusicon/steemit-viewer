@@ -17,12 +17,19 @@ export class MyDrawerComponent implements OnInit {
     @Input() selectedPage: string;
     @ViewChild('background') background: StackLayout;
 
+    public backgroundURL: string;
+
     ngOnInit(): void {
         this.steem.getAccount(this.steem.getAccountName()).subscribe((res: AccountsInterface) => {
             this.account = res.result[0].name;
             this.reputation = this.steem.getAuthorReputation(res.result[0].reputation);
             res.result[0].metadata = JSON.parse(res.result[0].json_metadata);
-            this.background.backgroundImage = res.result[0].metadata.profile.cover_image;
+            const Prefix = "https://steemitimages.com/1024x256/";
+            const Bg = `url('${Prefix}${res.result[0].metadata.profile.cover_image}')`;
+            console.log('Magic:', Bg);
+            this.background.backgroundImage = Bg;
+            this.backgroundURL = Bg;
+            console.log("BG: ",  this.background.backgroundImage);
         });
     }
 

@@ -17,10 +17,10 @@
                         <Label class="center" [text]="item?.author" textWrap="true"></Label>
                         <Label class="center" text=" ({{ item.author_reputation_formatted }})"></Label>
                         <ScrollView class="center tag-container" orientation="horizontal">
-                                <StackLayout orientation="horizontal">
-                                    <Label class="tag" *ngFor="let tag of item.metadata.tags" [text]="' ' + tag + ' '"></Label>
-                                </StackLayout>
-                            </ScrollView>
+                            <StackLayout orientation="horizontal">
+                                <Label class="tag" *ngFor="let tag of item.metadata.tags" [text]="' ' + tag + ' '"></Label>
+                            </StackLayout>
+                        </ScrollView>
                     </StackLayout>
                     <FeedThumbnail [src]="item.thumbnail"></FeedThumbnail>
                     <Label class="nameLabel" [text]="item.title" textWrap="true"></Label>
