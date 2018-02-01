@@ -8,13 +8,13 @@ Current features:
 * Post view (currently using HTML wrapper without much formatting - subject to change)
 * App remembers your settings so no need to provide username every time
 * Lightweight
-* Blazing fast compared to eSteem app on my Xiaomi Mi5 with Android Oreo
-
-Planned features:
 * Trending page
 * New page
 * Hot page
+* Blazing fast compared to eSteem app on my Xiaomi Mi5 with Android Oreo
+
+Planned features:
 * Trending Tags
 * Ability to share links via native share panel
-* Login support *this one is not so important for me right now as I try to get app working and I don't have much knowledge about steem api*
+* Login support
 * Push notifications with new posts from followed accounts
