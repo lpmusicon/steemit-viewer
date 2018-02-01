@@ -1,1 +1,5 @@
-{"appId":"org.nativescript.steemittest","minSdkVersion":null,"targetSdkVersion":null}
+{
+  "appId": "org.nativescript.steemittest",
+  "minSdkVersion": 24,
+  "targetSdkVersion": 25
+}
