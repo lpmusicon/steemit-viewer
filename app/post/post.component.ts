@@ -1,14 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { PageRoute } from "nativescript-angular/router";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
-import { PageRoute } from "nativescript-angular/router";
-import { SteemService } from './../steem.service';
+import { SteemService } from "./../steem.service";
 
+import * as SocialShare from "nativescript-social-share";
+import { EventData } from "tns-core-modules/ui/editable-text-base/editable-text-base";
 import * as webViewModule from "tns-core-modules/ui/web-view";
-import { WebView } from "tns-core-modules/ui/web-view";
-import { FeedElementInterface } from "./../steem/feed.interface";
+import { IFeedElement } from "./../steem/feed.interface";
 
-interface PostInterface {
+interface IPostInterface {
     author: string;
     perm: string;
 }
@@ -17,7 +18,7 @@ interface PostInterface {
     selector: "Post",
     moduleId: module.id,
     templateUrl: "./post.component.html",
-    styleUrls: ['post.component.scss']
+    styleUrls: ["post.component.scss"]
 })
 export class PostComponent implements OnInit {
     /* ***********************************************************
@@ -25,27 +26,33 @@ export class PostComponent implements OnInit {
     * It is used in the "onDrawerButtonTap" function below to manipulate the drawer.
     *************************************************************/
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
-    @ViewChild('webView') webviewRef: ElementRef;
-
+    @ViewChild("webView") webviewRef: ElementRef;
+    post: IFeedElement;
+    body: string;
+    private uri: string;
     private _sideDrawerTransition: DrawerTransitionBase;
-
     constructor(private pageRoute: PageRoute, private steem: SteemService) {}
-
-    public Post: FeedElementInterface;
-    public body: string;
 
     /* ***********************************************************
     * Use the sideDrawerTransition property to change the open/close animation of the drawer.
     *************************************************************/
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
-        this.pageRoute.activatedRoute.subscribe((Route) => {
-            Route.params.subscribe((params: PostInterface) => {
-                this.Post = this.steem.getPost();
-                this.body = this.Post.body;
-            })
+        this.pageRoute.activatedRoute.subscribe((route) => {
+            route.params.subscribe((params: IPostInterface) => {
+                console.log(JSON.stringify(params));
+                this.post = this.steem.getPost();
+                this.body = this.post.body;
+            });
         });
-        this.body = `<html><head><script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script><style>a {pointer-events:none;} html, body {margin: 0; width: 100vw; overflow-x: hidden; } img { display: block; width: 100%; height: auto; }</style></head><body>${this.body}</body><script>var converter = new showdown.Converter(); var test = converter.makeHtml(document.body.innerHTML); document.body.innerHTML = test;</script></html>`;
+        this.body = `<html><head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script>
+        <style>a {pointer-events:none;} html, body {margin: 0; width: 100vw; overflow-x: hidden; }
+        img { display: block; width: 100%; height: auto; }</style></head>
+        <body>${this.body}</body>
+        <script>var converter = new showdown.Converter();
+        var test = converter.makeHtml(document.body.innerHTML);
+        document.body.innerHTML = test;</script></html>`;
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {
@@ -60,10 +67,16 @@ export class PostComponent implements OnInit {
         this.drawerComponent.sideDrawer.showDrawer();
     }
 
-    public onLoadStarted() {
-        let webView = this.webviewRef.nativeElement as WebView;
-        console.log('Android: ', webView.android);
-        if(webView.android) {
+    onShare(event: EventData) {
+        console.log("Share");
+        console.log();
+        SocialShare.shareUrl("Hello Event", "TextShare", "Share via:");
+    }
+
+    onLoadStarted() {
+        const webView = this.webviewRef.nativeElement as webViewModule.WebView;
+        console.log("Android: ", webView.android);
+        if (webView.android) {
             webView.android.getSettings().setDisplayZoomControls(false);
             webView.android.getSettings().setBuiltInZoomControls(false);
         }

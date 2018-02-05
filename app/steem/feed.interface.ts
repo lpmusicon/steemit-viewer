@@ -1,9 +1,10 @@
-export interface FeedElementMetadata {
-    image?: string[];
+export interface IFeedElementMetadata {
+    image?: Array<string>;
     thumbnail?: string;
+    tags?: Array<string>;
 }
 
-export interface FeedElementInterface {
+export interface IFeedElement {
     id: number;
     author: string;
     permlink: string;
@@ -21,13 +22,13 @@ export interface FeedElementInterface {
     root_title: string;
     pending_payout_value: string;
     author_reputation: string;
-    //ADDED BY APP
+    // ADDED BY APP
     thumbnail: string;
-    metadata: FeedElementMetadata
+    metadata: IFeedElementMetadata;
     author_reputation_formatted?: number;
 }
 
-export interface FeedInterface {
+export interface IFeed {
     id: number;
-    result: FeedElementInterface[];
+    result: Array<IFeedElement>;
 }

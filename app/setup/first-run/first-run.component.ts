@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { RouterExtensions } from "nativescript-angular/router";
+import { RadListViewComponent } from "nativescript-pro-ui/listview/angular";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
-import { RadListViewComponent } from "nativescript-pro-ui/listview/angular"
-import { SteemService } from "./../../steem.service";
-import { RouterExtensions } from "nativescript-angular/router";
-import { Page } from "tns-core-modules/ui/page/page";
 import { EventData } from "tns-core-modules/ui/core/view/view";
+import { Page } from "tns-core-modules/ui/page/page";
 import { TextField } from "tns-core-modules/ui/text-field/text-field";
-import { AccountInterface, AccountsInterface } from "./../../steem/account.interface";
+import { SteemService } from "./../../steem.service";
+import { IAccount, IAccounts } from "./../../steem/account.interface";
 
 @Component({
     selector: "Home",
@@ -16,12 +16,12 @@ import { AccountInterface, AccountsInterface } from "./../../steem/account.inter
     styleUrls: ["./first-run.component.scss"]
 })
 export class FirstRunComponent implements OnInit {
+    username: string;
+
     constructor(
         private page: Page,
-        private steem: SteemService, 
+        private steem: SteemService,
         private routerExtensions: RouterExtensions) {}
-
-    public username: string;
 
     ngOnInit(): void {
         this.page.backgroundImage = "res://bg";
@@ -31,26 +31,26 @@ export class FirstRunComponent implements OnInit {
         this.page.actionBarHidden = true;
     }
 
-    public onSave(event: EventData): void {
-        console.log('UN:', this.username);
-        this.steem.getAccount(this.username.toLowerCase()).subscribe((result: AccountsInterface) => {
-            const Accounts = result.result as AccountInterface[];
-            if(Accounts.length > 0) {
-                const Account = Accounts[0] as AccountInterface;
-                Account.metadata = JSON.parse(Account.json_metadata);
-                this.steem.setAccountBackground(Account.metadata.profile.cover_image);
+    onSave(event: EventData): void {
+        console.log("UN:", this.username);
+        this.steem.getAccount(this.username.toLowerCase()).subscribe((result: IAccounts) => {
+            const accounts = result.result as Array<IAccount>;
+            if (accounts.length > 0) {
+                const account = accounts[0] as IAccount;
+                account.metadata = JSON.parse(account.json_metadata);
+                this.steem.setAccountBackground(account.metadata.profile.cover_image);
                 this.steem.setAccountName(this.username.toLowerCase());
-                this.routerExtensions.navigate(['/home'], { clearHistory: true });
+                this.routerExtensions.navigate(["/home"], { clearHistory: true });
             } else {
-                alert('User not found. Check spelling and try again');
+                alert("User not found. Check spelling and try again");
             }
         }, (error) => {
-            console.log('error');
-        })
+            console.log("error");
+        });
     }
 
-    public onBlur(event: any) {
-        const TextField = event.object as TextField;
-        this.username = TextField.text;
+    onBlur(event: any) {
+        const textField = event.object as TextField;
+        this.username = textField.text;
     }
 }

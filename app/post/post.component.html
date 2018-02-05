@@ -10,18 +10,11 @@
         ios.position="left">
     </ActionItem>
     <StackLayout orientation="horizontal" class="topBar">
-        <Image class="avatarImage" src="https://steemitimages.com/u/{{ Post?.author }}/avatar"></Image>
-        <Label class="center" [text]="Post?.author"></Label>
+        <WebImage class="avatarImage" rounded="true" src="https://steemitimages.com/u/{{ post?.author }}/avatar"></WebImage>
+        <Label class="center" [text]="post?.author"></Label>
     </StackLayout>
 </ActionBar>
 
-<!--
-RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
-Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
-http://docs.telerik.com/devtools/nativescript-ui/Controls/Angular/SideDrawer/getting-started
-The RadSideDrawer component is designed to be used as a root element and
-it shouldn't have any other siblings other than the <ActionBar> component.
--->
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
     <!--
     Use the tkDrawerContent directive to display the content of the app drawer on this page.
@@ -34,7 +27,8 @@ it shouldn't have any other siblings other than the <ActionBar> component.
     Use the tkMainContent directive to display the content of the page when you have an app drawer.
     -->
     <StackLayout orientation="vertical" class="page page-content" tkMainContent>
-        <Label class="margin title" [text]="Post.title" textWrap="true"></Label>
+        <Label class="margin title" [text]="post.title" textWrap="true"></Label>
+        <Button (tap)="onShare($event)" text="Share"></Button>
         <WebView class="webView" (loadStarted)="onLoadStarted()" #webView [src]="body"></WebView>
     </StackLayout>
 </RadSideDrawer>

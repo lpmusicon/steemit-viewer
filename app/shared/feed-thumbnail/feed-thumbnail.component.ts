@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { SteemService } from './../../steem.service';
-import { AccountsInterface } from "./../../steem/account.interface";
+import { SteemService } from "./../../steem.service";
 
 @Component({
     selector: "FeedThumbnail",
@@ -10,8 +9,10 @@ import { AccountsInterface } from "./../../steem/account.interface";
 })
 export class FeedThumbnailComponent implements OnInit {
     @Input() src: string;
-
-    ngOnInit(): void {}
-
-    constructor() {}
+    constructor() {
+        //
+    }
+    ngOnInit(): void {
+        //
+    }
 }

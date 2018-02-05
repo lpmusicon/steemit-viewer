@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { SteemService } from './../../steem.service';
-import { AccountsInterface } from "./../../steem/account.interface";
+import { Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from "@angular/core";
+import { SteemService } from "./../../steem.service";
 
 @Component({
     selector: "FeedAvatarIcon",
@@ -8,18 +7,22 @@ import { AccountsInterface } from "./../../steem/account.interface";
     templateUrl: "./feed-avatar-icon.component.html",
     styleUrls: ["./feed-avatar-icon.component.scss"]
 })
-export class FeedAvatarIconComponent implements OnInit {
+export class FeedAvatarIconComponent implements OnInit, OnChanges {
     @Input() src: string;
 
-    public avatarURL: string;
-    public placeholder: string;
-
-    public ngOnInit(): void {
-        this.avatarURL = `https://steemitimages.com/u/${this.src}/avatar`;;
-    }
+    avatarURL: string;
+    placeholder: string;
 
     constructor() {
         this.placeholder = "res://ic_account_circle_white_48dp";
-        this.avatarURL = "";
+    }
+
+    ngOnInit(): void {
+        this.avatarURL = `https://steemitimages.com/u/${this.src}/avatar/small`;
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        const src: SimpleChange = changes.src;
+        this.avatarURL = `https://steemitimages.com/u/${src.currentValue}/avatar/small`;
     }
 }

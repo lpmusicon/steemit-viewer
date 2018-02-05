@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
 
-import { FeedInterface, FeedElementInterface } from './steem/feed.interface';
-import { AccountsInterface } from './steem/account.interface';
 import * as ApplicationSettings from "application-settings";
+import { IAccounts } from "./steem/account.interface";
+import { IFeed, IFeedElement } from "./steem/feed.interface";
 
-interface ParamsInterface {
+interface IParamsInterface {
     limit: number;
     tag: string;
     start_author?: string;
@@ -14,99 +14,95 @@ interface ParamsInterface {
 }
 
 @Injectable()
-export class SteemService
-{
-    private SteemitAPI: string;
+export class SteemService {
+    private static postElement: IFeedElement;
+    private static accountBackground: string;
+    private steemitAPI: string;
     private currentLimit: number;
     constructor(private http: HttpClient) {
-        this.SteemitAPI = 'https://api.steemit.com';
+        this.steemitAPI = "https://api.steemit.com";
         this.currentLimit = 11;
     }
 
-    public getNew(tag: string = "", start_author: string = "", start_permlink: string = ""): Observable<FeedInterface>
-    {
-        let PARAMS = {
-            "limit": this.currentLimit,
-            "tag": tag
-        } as ParamsInterface;
+    getNew(tag: string = "", startAuthor: string = "", startPermlink: string = ""): Observable<IFeed> {
+        const PARAMS: IParamsInterface = {
+            limit: this.currentLimit,
+            tag
+        };
 
-        if(start_author.length > 0 && start_permlink.length > 0) {
-            PARAMS.start_author = start_author;
-            PARAMS.start_permlink = start_permlink;
+        if (startAuthor.length > 0 && startPermlink.length > 0) {
+            PARAMS.start_author = startAuthor;
+            PARAMS.start_permlink = startPermlink;
         }
 
-        return this.http.post<FeedInterface>(this.SteemitAPI, {
-            "id": 2,
-            "jsonrpc": "2.0",
-            "method": "get_discussions_by_created",
-            "params": [PARAMS]
+        return this.http.post<IFeed>(this.steemitAPI, {
+            id: 2,
+            jsonrpc: "2.0",
+            method: "get_discussions_by_created",
+            params: [PARAMS]
         });
     }
 
-    public getTrending(tag: string = "", start_author: string = "", start_permlink: string = ""): Observable<FeedInterface>
-    {
-        let PARAMS = {
-            "limit": this.currentLimit,
-            "tag": tag
-        } as ParamsInterface;
+    getTrending(tag: string = "", startAuthor: string = "", startPermlink: string = ""): Observable<IFeed> {
+        const PARAMS: IParamsInterface = {
+            limit: this.currentLimit,
+            tag
+        };
 
-        if(start_author.length > 0 && start_permlink.length > 0) {
-            PARAMS.start_author = start_author;
-            PARAMS.start_permlink = start_permlink;
+        if (startAuthor.length > 0 && startPermlink.length > 0) {
+            PARAMS.start_author = startAuthor;
+            PARAMS.start_permlink = startPermlink;
         }
 
-        return this.http.post<FeedInterface>(this.SteemitAPI, {
-            "id": 2,
-            "jsonrpc": "2.0",
-            "method": "get_discussions_by_trending",
-            "params": [PARAMS]
+        return this.http.post<IFeed>(this.steemitAPI, {
+            id: 2,
+            jsonrpc: "2.0",
+            method: "get_discussions_by_trending",
+            params: [PARAMS]
         });
     }
 
-    public getHot(tag: string = "", start_author: string = "", start_permlink: string = ""): Observable<FeedInterface>
-    {
-        let PARAMS = {
-            "limit": this.currentLimit,
-            "tag": tag
-        } as ParamsInterface;
+    getHot(tag: string = "", startAuthor: string = "", startPermlink: string = ""): Observable<IFeed> {
+        const PARAMS: IParamsInterface = {
+            limit: this.currentLimit,
+            tag
+        };
 
-        if(start_author.length > 0 && start_permlink.length > 0) {
-            PARAMS.start_author = start_author;
-            PARAMS.start_permlink = start_permlink;
+        if (startAuthor.length > 0 && startPermlink.length > 0) {
+            PARAMS.start_author = startAuthor;
+            PARAMS.start_permlink = startPermlink;
         }
 
         console.log(JSON.stringify(PARAMS));
 
-        return this.http.post<FeedInterface>(this.SteemitAPI, {
-            "id": 2,
-            "jsonrpc": "2.0",
-            "method": "get_discussions_by_hot",
-            "params": [PARAMS]
+        return this.http.post<IFeed>(this.steemitAPI, {
+            id: 2,
+            jsonrpc: "2.0",
+            method: "get_discussions_by_hot",
+            params: [PARAMS]
         });
     }
 
-    public getFeed(start_author: string = "", start_permlink: string = ""): Observable<FeedInterface>
-    {
-        return this.http.post<FeedInterface>(this.SteemitAPI, {
-            "id": 1, 
-            "jsonrpc":"2.0",
-            "method": "get_discussions_by_feed",
-            "params": [{
-                "tag": this.getAccountName(),
-                "limit": this.currentLimit,
-                "start_author": start_author,
-                "start_permlink": start_permlink
+    getFeed(startAuthor: string = "", startPermlink: string = ""): Observable<IFeed> {
+        return this.http.post<IFeed>(this.steemitAPI, {
+            id: 1,
+            jsonrpc: "2.0",
+            method: "get_discussions_by_feed",
+            params: [{
+                tag: this.getAccountName(),
+                limit: this.currentLimit,
+                start_author: startAuthor,
+                start_permlink: startPermlink
             }]
         });
     }
 
-    public getAccount(account: string = ""): Observable<AccountsInterface>
-    {
-        return this.http.post<AccountsInterface>(this.SteemitAPI, {
-            "id": 0,
-            "jsonrpc": "2.0",
-            "method": "call",
-            "params": [
+    getAccount(account: string = ""): Observable<IAccounts> {
+        return this.http.post<IAccounts>(this.steemitAPI, {
+            id: 0,
+            jsonrpc: "2.0",
+            method: "call",
+            params: [
                 "database_api",
                 "get_accounts",
                 [[account]]
@@ -114,35 +110,31 @@ export class SteemService
         });
     }
 
-    public setAccountName(account: string): void {
-        ApplicationSettings.setString('accountName', account);
+    setAccountName(account: string): void {
+        ApplicationSettings.setString("accountName", account);
     }
 
-    public getAccountName(): string {
-        return ApplicationSettings.getString('accountName', null);
+    getAccountName(): string {
+        return ApplicationSettings.getString("accountName", null);
     }
 
-    private static PostElement: FeedElementInterface;
-    public setPost(FeedElement: FeedElementInterface): void
-    {
-        SteemService.PostElement = FeedElement;
+    setPost(feedElement: IFeedElement): void {
+        SteemService.postElement = feedElement;
     }
 
-    public getPost(): FeedElementInterface
-    {
-        return SteemService.PostElement;
+    getPost(): IFeedElement {
+        return SteemService.postElement;
     }
 
-    private static accountBackground: string;
-    public setAccountBackground(bg: string): void {
+    setAccountBackground(bg: string): void {
         SteemService.accountBackground = bg;
     }
 
-    public getAccountBackground(): string {
+    getAccountBackground(): string {
         return SteemService.accountBackground;
     }
 
-    public resetAll(): void {
+    resetAll(): void {
         ApplicationSettings.clear();
         SteemService.accountBackground = "";
     }

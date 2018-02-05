@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { RouterExtensions } from "nativescript-angular/router";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
 import { EventData } from "tns-core-modules/data/observable/observable";
-import { SteemService } from './../steem.service';
-import { RouterExtensions } from "nativescript-angular/router";
+import { SteemService } from "./../steem.service";
 
 @Component({
     selector: "Settings",
@@ -19,6 +19,7 @@ export class SettingsComponent implements OnInit {
 
     private _sideDrawerTransition: DrawerTransitionBase;
 
+    constructor(private steem: SteemService, private routerExtensions: RouterExtensions) {}
     /* ***********************************************************
     * Use the sideDrawerTransition property to change the open/close animation of the drawer.
     *************************************************************/
@@ -30,11 +31,9 @@ export class SettingsComponent implements OnInit {
         return this._sideDrawerTransition;
     }
 
-    constructor(private steem: SteemService, private routerExtensions: RouterExtensions) {}
-
-    public onReset(event: EventData) {
+    onReset(event: EventData) {
         this.steem.resetAll();
-        this.routerExtensions.navigate(['/home'], { clearHistory: true });
+        this.routerExtensions.navigate(["/home"], { clearHistory: true });
     }
 
     /* ***********************************************************
