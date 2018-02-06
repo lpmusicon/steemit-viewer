@@ -10,8 +10,11 @@ import { TrendingComponent } from "./trending/trending.component";
 const routes: Routes = [
     { path: "", component: FeedComponent },
     { path: "hot", component: HotComponent },
+    { path: "hot/:tag", component: HotComponent },
     { path: "trending", component: TrendingComponent },
-    { path: "new", component: NewComponent }
+    { path: "trending/:tag", component: TrendingComponent },
+    { path: "new", component: NewComponent },
+    { path: "new/:tag", component: NewComponent }
 ];
 
 @NgModule({

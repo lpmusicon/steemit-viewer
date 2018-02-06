@@ -73,8 +73,6 @@ export class SteemService {
             PARAMS.start_permlink = startPermlink;
         }
 
-        console.log(JSON.stringify(PARAMS));
-
         return this.http.post<IFeed>(this.steemitAPI, {
             id: 2,
             jsonrpc: "2.0",

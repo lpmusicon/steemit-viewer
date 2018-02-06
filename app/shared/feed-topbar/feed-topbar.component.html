@@ -1,0 +1,18 @@
+<StackLayout class="topBar" orientation="horizontal">
+    <FeedAvatarIcon [src]="post?.author"></FeedAvatarIcon>
+    <StackLayout orientation="vertical" class="center">
+        <Label class="center" [text]="post?.author +  ' (' + post.author_reputation_formatted +')'" textWrap="true"></Label>
+        <StackLayout orientation="horizontal">
+            <Label text="in "></Label>
+            <Label [text]="post.category" textWrap="true" style="color: #6600ff"></Label>
+        </StackLayout>
+    </StackLayout>
+    <GridLayout class="payout" columns="*, auto" rows="*, auto, *">
+        <Label col="0" row="0"></Label>
+        <StackLayout col="1" row="1" orientation="vertical" class="center">
+            <Label class="align-right" text="Pending payout:"></Label>
+            <Label class="align-right payout" [text]="post.pending_payout_value" textWrap="true"></Label>
+        </StackLayout>
+        <Label col="1" row="2"></Label>
+    </GridLayout>
+</StackLayout>

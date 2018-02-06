@@ -19,18 +19,10 @@
         <RadListView loadOnDemandMode="Auto" [items]="currentFeed" (itemTap)="onClick($event)" (loadMoreDataRequested)="onLoadMore($event)">
             <ng-template tkListItemTemplate let-item="item">
                 <StackLayout orientation="vertical" class="feedItem">
-                    <StackLayout class="topBar" orientation="horizontal">
-                        <FeedAvatarIcon [src]="item?.author"></FeedAvatarIcon>
-                        <Label class="center" [text]="item?.author" textWrap="true"></Label>
-                        <Label class="center" [text]="' ('+item.author_reputation_formatted+')'"></Label>
-                        <ScrollView class="center tag-container" orientation="horizontal">
-                            <StackLayout orientation="horizontal">
-                                <Label class="tag" *ngFor="let tag of item?.metadata.tags" [text]="' ' + tag + ' '" (tap)="onTag($event, tag)"></Label>
-                            </StackLayout>
-                        </ScrollView>
-                    </StackLayout>
+                    <FeedTopbar [post]="item"></FeedTopbar>
                     <FeedThumbnail [src]="item.thumbnail"></FeedThumbnail>
                     <Label class="nameLabel" [text]="item.title" textWrap="true"></Label>
+                    <FeedSocialFooter [item]="item" (tap)="onTag($event)"></FeedSocialFooter>
                 </StackLayout>
             </ng-template>
         </RadListView>

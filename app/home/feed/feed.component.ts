@@ -37,6 +37,8 @@ export class FeedComponent implements OnInit {
         this.steem.getFeed().subscribe((data: IFeed) => {
             this.feedUtility.formatFeedData(data.result);
             this.currentFeed = new ObservableArray(data.result);
+        }, (error) => {
+            console.log("Error");
         });
     }
 

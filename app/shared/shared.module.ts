@@ -6,7 +6,9 @@ import { MyDrawerItemComponent } from "./my-drawer-item/my-drawer-item.component
 import { MyDrawerComponent } from "./my-drawer/my-drawer.component";
 
 import { FeedAvatarIconComponent } from "./feed-avatar-icon/feed-avatar-icon.component";
+import { FeedSocialFooterComponent } from "./feed-social-footer/feed-social-footer.component";
 import { FeedThumbnailComponent } from "./feed-thumbnail/feed-thumbnail.component";
+import { FeedTopbarComponent } from "./feed-topbar/feed-topbar.component";
 
 @NgModule({
     imports: [
@@ -18,14 +20,18 @@ import { FeedThumbnailComponent } from "./feed-thumbnail/feed-thumbnail.componen
         MyDrawerComponent,
         MyDrawerItemComponent,
         FeedAvatarIconComponent,
-        FeedThumbnailComponent
+        FeedThumbnailComponent,
+        FeedTopbarComponent,
+        FeedSocialFooterComponent
     ],
     exports: [
         MyDrawerComponent,
         NativeScriptUISideDrawerModule,
         NativeScriptUIListViewModule,
         FeedAvatarIconComponent,
-        FeedThumbnailComponent
+        FeedThumbnailComponent,
+        FeedTopbarComponent,
+        FeedSocialFooterComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
