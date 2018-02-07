@@ -20,7 +20,6 @@ import { TrendingComponent } from "./trending/trending.component";
         TrendingComponent,
         NewComponent
     ],
-    providers: [],
     schemas: [
         NO_ERRORS_SCHEMA
     ]

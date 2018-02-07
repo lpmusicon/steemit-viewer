@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { SteemService } from "./../../steem.service";
 
-import { IFeedElement } from "./../../steem/feed.interface";
+import { IPost } from "./../../steem/post.interface";
 @Component({
     selector: "FeedTopbar",
     moduleId: module.id,
@@ -9,7 +9,7 @@ import { IFeedElement } from "./../../steem/feed.interface";
     styleUrls: ["./feed-topbar.component.scss"]
 })
 export class FeedTopbarComponent implements OnInit {
-    @Input() post: IFeedElement;
+    @Input() post: IPost;
     constructor() {
         //
     }

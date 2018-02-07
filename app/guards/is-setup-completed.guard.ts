@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
-  CanActivate, Router,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  CanActivateChild
-} from '@angular/router';
+  ActivatedRouteSnapshot, CanActivate,
+  CanActivateChild,
+  Router,
+  RouterStateSnapshot
+} from "@angular/router";
 
 import * as ApplicationSettings from "application-settings";
 
@@ -13,9 +13,10 @@ export class IsSetupCompletedGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const AccountName = ApplicationSettings.getString('accountName', null);
-    if(AccountName === null) {
-        this.router.navigate(['/setup/first-run']);
+    const ACCOUNT_NAME = ApplicationSettings.getString("accountName", null);
+    if (ACCOUNT_NAME === null) {
+        this.router.navigate(["/setup/first-run"]);
+
         return false;
     }
 

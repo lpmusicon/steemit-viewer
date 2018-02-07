@@ -1,15 +1,15 @@
 <StackLayout class="center" orientation="horizontal">
-        <StackLayout class="margin" orientation="horizontal">
-            <Label class="fa mar" text="&#xf164;"></Label>
-            <Label class="likes" [text]="item.active_votes.length"></Label>
-        </StackLayout>
-        <StackLayout class="margin" orientation="horizontal">
-            <Label class="fa mar" text="&#xf27a;"></Label>
-            <Label class="comments" [text]="item.children"></Label>
-        </StackLayout>
-        <ScrollView class="center tag-container" orientation="horizontal">
-            <StackLayout orientation="horizontal">
-                <Label class="tag center" *ngFor="let tag of item?.metadata.tags" [text]="' ' + tag + ' '" (tap)="onTap(tag)"></Label>
-            </StackLayout>
-        </ScrollView>
+    <StackLayout class="margin" orientation="horizontal">
+        <Label class="fa mar" text="&#xf164;"></Label>
+        <Label class="likes" [text]="item.active_votes.length"></Label>
     </StackLayout>
+    <StackLayout class="margin" orientation="horizontal">
+        <Label class="fa mar" text="&#xf27a;"></Label>
+        <Label class="comments" [text]="item.children"></Label>
+    </StackLayout>
+    <ScrollView class="center tag-container" orientation="horizontal">
+        <StackLayout orientation="horizontal">
+            <Label class="tag center" *ngFor="let tag of item?.metadata.tags" [text]="' ' + tag + ' '" (tap)="onTap(tag)"></Label>
+        </StackLayout>
+    </ScrollView>
+</StackLayout>

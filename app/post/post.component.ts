@@ -7,7 +7,7 @@ import { SteemService } from "./../steem.service";
 import * as SocialShare from "nativescript-social-share";
 import { EventData } from "tns-core-modules/ui/editable-text-base/editable-text-base";
 import * as webViewModule from "tns-core-modules/ui/web-view";
-import { IFeedElement } from "./../steem/feed.interface";
+import { IPost } from "./../steem/post.interface";
 
 interface IPostInterface {
     author: string;
@@ -27,7 +27,7 @@ export class PostComponent implements OnInit {
     *************************************************************/
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
     @ViewChild("webView") webviewRef: ElementRef;
-    post: IFeedElement;
+    post: IPost;
     body: string;
     private uri: string;
     private _sideDrawerTransition: DrawerTransitionBase;
@@ -69,7 +69,6 @@ export class PostComponent implements OnInit {
 
     onShare(event: EventData) {
         console.log("Share");
-        console.log();
         SocialShare.shareUrl("Hello Event", "TextShare", "Share via:");
     }
 

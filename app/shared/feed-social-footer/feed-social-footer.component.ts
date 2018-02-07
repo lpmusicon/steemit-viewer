@@ -1,20 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { SteemService } from "./../../steem.service";
-import { IFeedElement } from "./../../steem/feed.interface";
+import { IPost } from "./../../steem/post.interface";
 @Component({
     selector: "FeedSocialFooter",
     moduleId: module.id,
     templateUrl: "./feed-social-footer.component.html",
     styleUrls: ["./feed-social-footer.component.scss"]
 })
-export class FeedSocialFooterComponent implements OnInit {
-    @Input() item: IFeedElement;
+export class FeedSocialFooterComponent {
+    @Input() item: IPost;
     @Output() tap: EventEmitter<string>;
+
     constructor() {
         this.tap = new EventEmitter<string>();
-    }
-    ngOnInit(): void {
-        //
     }
 
     onTap(tag: string) {

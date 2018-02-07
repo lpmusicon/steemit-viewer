@@ -16,7 +16,7 @@
                 <Label class="fa center icon" text="&#xf057;"></Label>
             </StackLayout>
         </StackLayout>
-        <RadListView loadOnDemandMode="Auto" [items]="currentFeed" (itemTap)="onClick($event)" (loadMoreDataRequested)="onLoadMore($event)">
+        <RadListView loadOnDemandMode="Auto" [items]="feed" (itemTap)="onClick($event)" (loadMoreDataRequested)="onLoadMore($event)">
             <ng-template tkListItemTemplate let-item="item">
                 <StackLayout orientation="vertical" class="feedItem">
                     <FeedTopbar [post]="item"></FeedTopbar>

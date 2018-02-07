@@ -26,11 +26,6 @@ export class MyDrawerItemComponent implements OnInit {
         *************************************************************/
     }
 
-    /* ***********************************************************
-    * Use the "tap" event handler of the GridLayout component for handling navigation item taps.
-    * The "tap" event handler of the app drawer item <GridLayout> is used to navigate the app
-    * based on the tapped navigationItem's route.
-    *************************************************************/
     onNavItemTap(navItemRoute: string): void {
         this.routerExtensions.navigate([navItemRoute], {
             transition: {

@@ -4,28 +4,24 @@ import { Observable } from "rxjs/Observable";
 
 import * as ApplicationSettings from "application-settings";
 import { IAccounts } from "./steem/account.interface";
-import { IFeed, IFeedElement } from "./steem/feed.interface";
-
-interface IParamsInterface {
-    limit: number;
-    tag: string;
-    start_author?: string;
-    start_permlink?: string;
-}
+import { FeedMethods, IFeed } from "./steem/feed.interface";
+import { IFeedParams } from "./steem/params.interface";
+import { IPost } from "./steem/post.interface";
 
 @Injectable()
 export class SteemService {
-    private static postElement: IFeedElement;
+    private static postElement: IPost;
     private static accountBackground: string;
     private steemitAPI: string;
     private currentLimit: number;
+
     constructor(private http: HttpClient) {
         this.steemitAPI = "https://api.steemit.com";
         this.currentLimit = 11;
     }
 
     getNew(tag: string = "", startAuthor: string = "", startPermlink: string = ""): Observable<IFeed> {
-        const PARAMS: IParamsInterface = {
+        const PARAMS: IFeedParams = {
             limit: this.currentLimit,
             tag
         };
@@ -38,13 +34,13 @@ export class SteemService {
         return this.http.post<IFeed>(this.steemitAPI, {
             id: 2,
             jsonrpc: "2.0",
-            method: "get_discussions_by_created",
+            method: FeedMethods.byCreated,
             params: [PARAMS]
         });
     }
 
     getTrending(tag: string = "", startAuthor: string = "", startPermlink: string = ""): Observable<IFeed> {
-        const PARAMS: IParamsInterface = {
+        const PARAMS: IFeedParams = {
             limit: this.currentLimit,
             tag
         };
@@ -57,13 +53,13 @@ export class SteemService {
         return this.http.post<IFeed>(this.steemitAPI, {
             id: 2,
             jsonrpc: "2.0",
-            method: "get_discussions_by_trending",
+            method: FeedMethods.byTrending,
             params: [PARAMS]
         });
     }
 
     getHot(tag: string = "", startAuthor: string = "", startPermlink: string = ""): Observable<IFeed> {
-        const PARAMS: IParamsInterface = {
+        const PARAMS: IFeedParams = {
             limit: this.currentLimit,
             tag
         };
@@ -76,7 +72,7 @@ export class SteemService {
         return this.http.post<IFeed>(this.steemitAPI, {
             id: 2,
             jsonrpc: "2.0",
-            method: "get_discussions_by_hot",
+            method: FeedMethods.byHot,
             params: [PARAMS]
         });
     }
@@ -85,7 +81,7 @@ export class SteemService {
         return this.http.post<IFeed>(this.steemitAPI, {
             id: 1,
             jsonrpc: "2.0",
-            method: "get_discussions_by_feed",
+            method: FeedMethods.byFeed,
             params: [{
                 tag: this.getAccountName(),
                 limit: this.currentLimit,
@@ -116,11 +112,11 @@ export class SteemService {
         return ApplicationSettings.getString("accountName", null);
     }
 
-    setPost(feedElement: IFeedElement): void {
+    setPost(feedElement: IPost): void {
         SteemService.postElement = feedElement;
     }
 
-    getPost(): IFeedElement {
+    getPost(): IPost {
         return SteemService.postElement;
     }
 

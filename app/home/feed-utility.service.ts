@@ -1,15 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 
-import { SteemService } from "./../steem.service";
-import { IFeedElement } from "./../steem/feed.interface";
+import { IPost } from "./../steem/post.interface";
 
 @Injectable()
 export class FeedUtilityService {
-    constructor(
-        private steem: SteemService
-    ) {}
-
     getAuthorReputation(reputation: string): number {
         const rep = parseInt(reputation, 10);
         const absRep = Math.abs(rep);
@@ -28,8 +23,9 @@ export class FeedUtilityService {
         return out;
     }
 
-    formatFeedData(feed: Array<IFeedElement>): void {
-        feed.forEach((feedElement: IFeedElement) => {
+    formatFeedData(feed: Array<IPost>): void {
+        feed.forEach((feedElement: IPost) => {
+            feedElement.metadata = JSON.parse(feedElement.json_metadata);
             feedElement.author_reputation_formatted = this.getAuthorReputation(feedElement.author_reputation);
             let foundThumbnail = false;
 
@@ -49,7 +45,6 @@ export class FeedUtilityService {
                 }
             }
 
-            feedElement.metadata = JSON.parse(feedElement.json_metadata);
             if (!foundThumbnail) {
                 if (feedElement.metadata.hasOwnProperty("image")) {
                     feedElement.thumbnail = feedElement.metadata.image[0];
@@ -60,11 +55,7 @@ export class FeedUtilityService {
                 }
             }
 
-            if (!foundThumbnail) {
-                console.log("No Image for", feedElement.title);
-                feedElement.thumbnail = "";
-            }
-
+            feedElement.thumbnail = !foundThumbnail ? "" : feedElement.thumbnail;
             feedElement.thumbnail = feedElement.thumbnail.replace(/^http:\/\//i, "https://");
         });
     }
