@@ -15,6 +15,7 @@ export class MyDrawerItemComponent implements OnInit {
     @Input() route: string;
     @Input() icon: string;
     @Input() isSelected: boolean;
+    @Input() isDisabled: boolean;
 
     constructor(private routerExtensions: RouterExtensions) {
 
@@ -26,12 +27,11 @@ export class MyDrawerItemComponent implements OnInit {
         *************************************************************/
     }
 
-    /* ***********************************************************
-    * Use the "tap" event handler of the GridLayout component for handling navigation item taps.
-    * The "tap" event handler of the app drawer item <GridLayout> is used to navigate the app
-    * based on the tapped navigationItem's route.
-    *************************************************************/
     onNavItemTap(navItemRoute: string): void {
+        if (this.isDisabled) {
+            return;
+        }
+
         this.routerExtensions.navigate([navItemRoute], {
             transition: {
                 name: "fade"

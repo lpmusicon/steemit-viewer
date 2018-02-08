@@ -1,8 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { SteemService } from './../../steem.service';
-import { FeedUtilityService } from './../../home/feed-utility.service';
-import { AccountsInterface } from "./../../steem/account.interface";
 import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout/stack-layout";
+import { FeedUtilityService } from "./../../home/feed-utility.service";
+import { SettingsService } from "./../../shared/settings.service";
+import { SteemService } from "./../../steem.service";
+import { IAccount, IAccounts } from "./../../steem/account.interface";
 
 /* ***********************************************************
 * Keep data that is displayed in your app drawer in the MyDrawer component class.
@@ -17,30 +18,42 @@ import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout/stack-layo
 export class MyDrawerComponent implements OnInit {
     @Input() selectedPage: string;
 
-    public backgroundURL: string;
-    public avatarPlaceholder: string;
-    public avatarURL: string;
-    public account: string;
-    public reputation: number;
-
-    public ngOnInit(): void {
-        this.steem.getAccount(this.steem.getAccountName()).subscribe((res: AccountsInterface) => {
-            this.account = res.result[0].name;
-            this.reputation = this.feedUtility.getAuthorReputation(res.result[0].reputation);
-            res.result[0].metadata = JSON.parse(res.result[0].json_metadata);
-            const Prefix = "https://steemitimages.com/1024x256/";
-            const Bg = `url('${Prefix}${res.result[0].metadata.profile.cover_image}')`;
-            this.backgroundURL = Bg;
-            this.avatarURL = `https://steemitimages.com/u/${this.account}/avatar`;
-        });
-    }
+    backgroundURL: string;
+    avatarPlaceholder: string;
+    avatarURL: string;
+    account: string;
+    reputation: number;
 
     constructor(
-        private steem: SteemService, 
+        private steem: SteemService,
+        private settings: SettingsService,
         private feedUtility: FeedUtilityService) {
             this.avatarPlaceholder = "res://ic_account_circle_white_48dp";
         }
-   
+
+    ngOnInit(): void {
+        const prefix = "https://steemitimages.com/1024x256/";
+        // Get rep by get_by_reputation
+        this.settings.getAccountName().subscribe((accountName: string) => {
+            this.account = accountName;
+            this.avatarURL = `https://steemitimages.com/u/${accountName}/avatar`;
+
+            this.steem.getAccount(this.settings.accountName).subscribe((res: IAccounts) => {
+                const account: IAccount = res.result[0];
+                account.metadata = JSON.parse(account.json_metadata);
+
+                this.reputation = this.feedUtility.getAuthorReputation(account.reputation);
+                this.backgroundURL = `url('${prefix}${account.metadata.profile.cover_image}')`;
+                this.avatarURL = `https://steemitimages.com/u/${this.account}/avatar`;
+
+                this.settings.accountCover = account.metadata.profile.cover_image;
+            });
+        });
+
+        this.settings.getAccountCover().subscribe((cover: string) => {
+            this.backgroundURL = `url('${prefix}${cover}')`;
+        });
+    }
 
     isPageSelected(pageTitle: string): boolean {
         return pageTitle === this.selectedPage;

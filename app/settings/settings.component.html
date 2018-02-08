@@ -31,6 +31,10 @@ it shouldn't have any other siblings other than the <ActionBar> component.
     Use the tkMainContent directive to display the content of the page when you have an app drawer.
     -->
     <GridLayout class="page page-content" tkMainContent>
-        <Button text="Reset app" (tap)="onReset($event)"></Button>
+        <StackLayout orientation="vertical">
+            <Label text="Dark mode" style="vertical-align: center"></Label>
+            <Switch></Switch>
+            <Button text="Reset app" (tap)="onReset($event)"></Button>
+        </StackLayout>
     </GridLayout>
 </RadSideDrawer>

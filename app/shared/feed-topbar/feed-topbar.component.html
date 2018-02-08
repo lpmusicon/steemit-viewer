@@ -1,0 +1,7 @@
+<GridLayout columns="auto, auto, *, auto", rows="auto, auto">
+    <WebImage col="0" row="0" rowSpan="2" class="avatarImage" stretch="aspectFill" rounded="true" placeholder="res://ic_account_circle_white_48dp" src="https://steemitimages.com/u/{{ post.author }}/avatar/small" (tap)="onAccount()"></WebImage>
+    <Label col="1" row="0" class="bottom fl" textWrap="true" [text]="post?.author +  ' (' + post.author_reputation_formatted +')'" (tap)="onAccount()"></Label>
+    <Label col="1" row="1" class="top" textWrap="true" [text]="'in ' + post.category" (tap)="onTag()"></Label>
+    <Label col="3" row="0" class="align-right bottom" text="Pending payout:"></Label>
+    <Label col="3" row="1" class="align-right payout top" [text]="post.pending_payout_value" textWrap="true"></Label>
+</GridLayout>

@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { RouterExtensions } from "nativescript-angular/router";
 import { initializeOnAngular } from "nativescript-web-image-cache";
 
 @Component({
@@ -6,7 +7,8 @@ import { initializeOnAngular } from "nativescript-web-image-cache";
     template: "<page-router-outlet></page-router-outlet>"
 })
 export class AppComponent {
-    constructor() {
+    constructor(routerExtensions: RouterExtensions) {
+        routerExtensions.router.routeReuseStrategy.shouldReuseRoute = () => false;
         initializeOnAngular();
     }
  }
