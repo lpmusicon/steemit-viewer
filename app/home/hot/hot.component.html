@@ -9,18 +9,25 @@
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
     <StackLayout tkDrawerContent><MyDrawer [selectedPage]="pageName"></MyDrawer></StackLayout>
     <StackLayout orientation="vertical" tkMainContent>
-        <StackLayout *ngIf="currentTag !== ''" class="filter" orientation="horizontal">
+        <StackLayout class="filter" orientation="horizontal" *ngIf="currentTag !== ''">
             <Label class="text" text="Browsing tag: "></Label>
             <StackLayout (tap)="onTagReset()" orientation="horizontal">
                 <Label class="tag" [text]="currentTag" textWrap="true"></Label>
                 <Label class="fa center icon" text="&#xf057;"></Label>
             </StackLayout>
         </StackLayout>
-        <RadListView loadOnDemandMode="Auto" [items]="feed" (itemTap)="onClick($event)" (loadMoreDataRequested)="onLoadMore($event)">
-            <ng-template tkListItemTemplate let-item="item">
+        <RadListView loadOnDemandMode="Auto" [items]="feed" [itemTemplateSelector]="templateSelector" (itemTap)="onClick($event)" (loadMoreDataRequested)="onLoadMore($event)">
+            <ng-template tkTemplateKey="image" let-item="item">
                 <StackLayout orientation="vertical" class="feedItem">
                     <FeedTopbar [post]="item"></FeedTopbar>
                     <FeedThumbnail [src]="item.thumbnail"></FeedThumbnail>
+                    <Label class="nameLabel" [text]="item.title" textWrap="true"></Label>
+                    <FeedSocialFooter [item]="item" (tap)="onTag($event)"></FeedSocialFooter>
+                </StackLayout>
+            </ng-template>
+            <ng-template let-item="item" tkTemplateKey="no-image">
+                <StackLayout orientation="vertical" class="feedItem">
+                    <FeedTopbar [post]="item"></FeedTopbar>
                     <Label class="nameLabel" [text]="item.title" textWrap="true"></Label>
                     <FeedSocialFooter [item]="item" (tap)="onTag($event)"></FeedSocialFooter>
                 </StackLayout>

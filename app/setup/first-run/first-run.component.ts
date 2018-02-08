@@ -6,6 +6,7 @@ import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
 import { EventData } from "tns-core-modules/ui/core/view/view";
 import { Page } from "tns-core-modules/ui/page/page";
 import { TextField } from "tns-core-modules/ui/text-field/text-field";
+import { SettingsService } from "./../../shared/settings.service";
 import { SteemService } from "./../../steem.service";
 import { IAccount, IAccounts } from "./../../steem/account.interface";
 
@@ -21,6 +22,7 @@ export class FirstRunComponent implements OnInit {
     constructor(
         private page: Page,
         private steem: SteemService,
+        private settings: SettingsService,
         private routerExtensions: RouterExtensions) {}
 
     ngOnInit(): void {
@@ -32,14 +34,13 @@ export class FirstRunComponent implements OnInit {
     }
 
     onSave(event: EventData): void {
-        console.log("UN:", this.username);
         this.steem.getAccount(this.username.toLowerCase()).subscribe((result: IAccounts) => {
-            const accounts = result.result as Array<IAccount>;
+            const accounts: Array<IAccount> = result.result;
             if (accounts.length > 0) {
-                const account = accounts[0] as IAccount;
+                const account: IAccount = accounts[0];
                 account.metadata = JSON.parse(account.json_metadata);
-                this.steem.setAccountBackground(account.metadata.profile.cover_image);
-                this.steem.setAccountName(this.username.toLowerCase());
+                this.settings.accountName = this.username.toLowerCase();
+                this.settings.accountCover = account.metadata.profile.cover_image;
                 this.routerExtensions.navigate(["/home"], { clearHistory: true });
             } else {
                 alert("User not found. Check spelling and try again");
@@ -50,7 +51,7 @@ export class FirstRunComponent implements OnInit {
     }
 
     onBlur(event: any) {
-        const textField = event.object as TextField;
+        const textField: TextField = event.object;
         this.username = textField.text;
     }
 }

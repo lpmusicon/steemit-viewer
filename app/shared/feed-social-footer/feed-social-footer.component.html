@@ -7,9 +7,4 @@
         <Label class="fa mar" text="&#xf27a;"></Label>
         <Label class="comments" [text]="item.children"></Label>
     </StackLayout>
-    <ScrollView class="center tag-container" orientation="horizontal">
-        <StackLayout orientation="horizontal">
-            <Label class="tag center" *ngFor="let tag of item?.metadata.tags" [text]="' ' + tag + ' '" (tap)="onTap(tag)"></Label>
-        </StackLayout>
-    </ScrollView>
 </StackLayout>

@@ -3,6 +3,7 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
 import { EventData } from "tns-core-modules/data/observable/observable";
+import { SettingsService } from "./../shared/settings.service";
 import { SteemService } from "./../steem.service";
 
 @Component({
@@ -15,7 +16,10 @@ export class SettingsComponent implements OnInit {
 
     private _sideDrawerTransition: DrawerTransitionBase;
 
-    constructor(private steem: SteemService, private routerExtensions: RouterExtensions) {}
+    constructor(
+        private steem: SteemService,
+        private settings: SettingsService,
+        private routerExtensions: RouterExtensions) {}
 
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
@@ -26,7 +30,7 @@ export class SettingsComponent implements OnInit {
     }
 
     onReset(event: EventData) {
-        this.steem.resetAll();
+        this.settings.clear();
         this.routerExtensions.navigate(["/home"], { clearHistory: true });
     }
 

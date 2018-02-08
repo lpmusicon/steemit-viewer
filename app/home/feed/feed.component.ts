@@ -5,6 +5,7 @@ import { ListViewEventData } from "nativescript-pro-ui/listview";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
+import { SettingsService } from "./../../shared/settings.service";
 import { SteemService } from "./../../steem.service";
 import { IFeed } from "./../../steem/feed.interface";
 import { IPost } from "./../../steem/post.interface";
@@ -23,6 +24,7 @@ export class FeedComponent implements OnInit {
 
     constructor(
         private steem: SteemService,
+        private settings: SettingsService,
         private routerExtensions: RouterExtensions) {
             this.pageName = "Feed";
         }
@@ -56,12 +58,20 @@ export class FeedComponent implements OnInit {
     setPost(event: ListViewEventData) {
         const index = event.index;
         const item: IPost = this.feed.getItem(index);
-        this.steem.setPost(item);
+        this.settings.currentPost = item;
         this.routerExtensions.navigate(["/post/", item.author, item.permlink]);
     }
 
     onTag(tag: string): void {
         this.routerExtensions.navigate(["/home/trending/", tag]);
+    }
+
+    onAuthor(author: string): void {
+        this.routerExtensions.navigate(["/home/blog/", author]);
+    }
+
+    templateSelector(item: IPost, index: number, items: Array<IPost>): string {
+        return item.thumbnail === "" ? "no-image" : "image";
     }
 
     private getFeed(): void {

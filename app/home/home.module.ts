@@ -1,7 +1,7 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
-
 import { SharedModule } from "../shared/shared.module";
+import { BlogComponent } from "./blog/blog.component";
 import { FeedComponent } from "./feed/feed.component";
 import { HomeRoutingModule } from "./home-routing.module";
 import { HotComponent } from "./hot/hot.component";
@@ -18,7 +18,8 @@ import { TrendingComponent } from "./trending/trending.component";
         FeedComponent,
         HotComponent,
         TrendingComponent,
-        NewComponent
+        NewComponent,
+        BlogComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
