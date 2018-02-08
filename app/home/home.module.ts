@@ -6,6 +6,7 @@ import { FeedComponent } from "./feed/feed.component";
 import { HomeRoutingModule } from "./home-routing.module";
 import { HotComponent } from "./hot/hot.component";
 import { NewComponent } from "./new/new.component";
+import { TagsComponent } from "./tags/tags.component";
 import { TrendingComponent } from "./trending/trending.component";
 
 @NgModule({
@@ -19,7 +20,8 @@ import { TrendingComponent } from "./trending/trending.component";
         HotComponent,
         TrendingComponent,
         NewComponent,
-        BlogComponent
+        BlogComponent,
+        TagsComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
