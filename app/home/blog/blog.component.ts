@@ -81,6 +81,10 @@ export class BlogComponent implements OnInit {
         this.routerExtensions.navigate(["/home/blog/", author]);
     }
 
+    templateSelector(item: IPost, index: number, items: Array<IPost>): string {
+        return item.thumbnail === "" ? "no-image" : "image";
+    }
+
     private getFeed(): void {
         this.steem.getBlog(this.currentTag).subscribe(
         (data: IFeed) => this.feed = new ObservableArray(data.result),

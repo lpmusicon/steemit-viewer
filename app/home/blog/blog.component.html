@@ -9,15 +9,22 @@
 <RadSideDrawer showOverNavigation="true" #drawer [drawerTransition]="sideDrawerTransition">
     <StackLayout tkDrawerContent><MyDrawer [selectedPage]="pageName"></MyDrawer></StackLayout>
     <StackLayout orientation="vertical" class="page page-content" tkMainContent>
-        <RadListView loadOnDemandMode="Auto" [items]="feed" (itemTap)="setPost($event)" (loadMoreDataRequested)="onLoadMore($event)">
-            <ng-template tkListItemTemplate let-item="item">
+        <RadListView loadOnDemandMode="Auto" [items]="feed" [itemTemplateSelector]="templateSelector" (itemTap)="setPost($event)" (loadMoreDataRequested)="onLoadMore($event)">
+            <ng-template tkTemplateKey="image" let-item="item">
                 <StackLayout orientation="vertical" class="feedItem">
-                    <FeedTopbar [post]="item"></FeedTopbar>
+                    <FeedTopbar [post]="item" (author)="onAuthor($event)" (tag)="onTag($event)"></FeedTopbar>
                     <FeedThumbnail [src]="item.thumbnail"></FeedThumbnail>
                     <Label class="nameLabel" textWrap="true" [text]="item.title" (tap)="setPost(item)"></Label>
                     <FeedSocialFooter [item]="item" (tap)="onTag($event)"></FeedSocialFooter>
                 </StackLayout>
             </ng-template>
+            <ng-template let-item="item" tkTemplateKey="no-image">
+                    <StackLayout orientation="vertical" class="feedItem">
+                        <FeedTopbar [post]="item" (author)="onAuthor($event)" (tag)="onTag($event)"></FeedTopbar>
+                        <Label class="nameLabel" [text]="item.title" textWrap="true"></Label>
+                        <FeedSocialFooter [item]="item" (tap)="onTag($event)"></FeedSocialFooter>
+                    </StackLayout>
+                </ng-template>
         </RadListView>
     </StackLayout>
 </RadSideDrawer>

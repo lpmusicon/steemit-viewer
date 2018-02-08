@@ -13,9 +13,9 @@ Feel free to customize layouts and components to change how your app drawer look
 
     <ScrollView row="1">
         <StackLayout class="sidedrawer-content">
+            <MyDrawerItem title="Blog" route="/home/blog" icon="&#xf015;" [isSelected]="isPageSelected('Blog')"></MyDrawerItem>
             <MyDrawerItem title="Search" route="/" icon="&#xf002;" [isSelected]="isPageSelected('Search')"></MyDrawerItem>
             <StackLayout class="hr-light"></StackLayout>
-            <MyDrawerItem title="Blog" route="/home/blog" icon="&#xf015;" [isSelected]="isPageSelected('Blog')"></MyDrawerItem>
             <MyDrawerItem title="Feed" route="/home" icon="&#xf015;" [isSelected]="isPageSelected('Feed')"></MyDrawerItem>
             <MyDrawerItem title="Hot" route="/home/hot" icon="&#xf06d;" [isSelected]="isPageSelected('Hot')"></MyDrawerItem>
             <MyDrawerItem title="Trending" route="/home/trending" icon="&#xf27a;" [isSelected]="isPageSelected('Trending')"></MyDrawerItem>

@@ -1,39 +1,28 @@
-.center {
-    vertical-align: center;
-    width: auto;
-}
-
-.align-right {
-    text-align: right;
-    margin-right: 12;
-}
-
-.avatarImage {
-    width: 42;
-    height: 42;
-    margin-left: 12;
-    vertical-align: center;
-    margin-right: 12;
-    margin-top: 12;
-    margin-bottom: 12;
-}
-
-.bottom {
-    vertical-align: bottom;
-}
-
-.top {
-    vertical-align: top;
-}
-
-.fl {
-    color: #333333;
-}
-
 GridLayout {
     border-bottom-width: 1;
     border-bottom-color: #DDDDDD;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom-style: solid;
+    WebImage.avatarImage {
+        width: 36;
+        height: 36;
+        margin: 8;
+        vertical-align: center;
+    }
+    Label {
+        &.bottom {
+            vertical-align: bottom;
+        }
+        &.top {
+            vertical-align: top;
+        }
+        &.fl {
+            color: #333333;
+        }
+        &.align-right {
+            text-align: right;
+            margin-right: 8;
+        }
+    }
 }

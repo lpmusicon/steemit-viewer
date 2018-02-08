@@ -19,14 +19,14 @@
         <RadListView loadOnDemandMode="Auto" [items]="feed" [itemTemplateSelector]="templateSelector" (itemTap)="onClick($event)" (loadMoreDataRequested)="onLoadMore($event)">
             <ng-template let-item="item" tkTemplateKey="image">
                 <StackLayout orientation="vertical" class="feedItem">
-                    <FeedTopbar [post]="item"></FeedTopbar>
+                    <FeedTopbar [post]="item" (author)="onAuthor($event)" (tag)="onTag($event)"></FeedTopbar>
                     <FeedThumbnail [src]="item.thumbnail"></FeedThumbnail>
                     <Label class="nameLabel" [text]="item.title" textWrap="true"></Label>
                 </StackLayout>
             </ng-template>
             <ng-template let-item="item" tkTemplateKey="no-image">
                 <StackLayout orientation="vertical" class="feedItem">
-                    <FeedTopbar [post]="item"></FeedTopbar>
+                    <FeedTopbar [post]="item" (author)="onAuthor($event)" (tag)="onTag($event)"></FeedTopbar>
                     <Label class="nameLabel" [text]="item.title" textWrap="true"></Label>
                 </StackLayout>
             </ng-template>

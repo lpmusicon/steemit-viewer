@@ -67,6 +67,7 @@ export class FeedComponent implements OnInit {
     }
 
     onAuthor(author: string): void {
+        console.log("hi");
         this.routerExtensions.navigate(["/home/blog/", author]);
     }
 

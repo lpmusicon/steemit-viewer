@@ -1,10 +1,6 @@
-<StackLayout class="center" orientation="horizontal">
-    <StackLayout class="margin" orientation="horizontal">
-        <Label class="fa mar" text="&#xf164;"></Label>
-        <Label class="likes" [text]="item.active_votes.length"></Label>
-    </StackLayout>
-    <StackLayout class="margin" orientation="horizontal">
-        <Label class="fa mar" text="&#xf27a;"></Label>
-        <Label class="comments" [text]="item.children"></Label>
-    </StackLayout>
-</StackLayout>
+<GridLayout columns="auto, auto, auto, auto">
+    <Label class="fa mr" col="0" text="&#xf164;"></Label>
+    <Label class="likes mr" col="1" [text]="item.active_votes.length"></Label>
+    <Label class="fa mr" col="2" text="&#xf27a;"></Label>
+    <Label class="comments" col="3" [text]="item.children"></Label>
+</GridLayout>

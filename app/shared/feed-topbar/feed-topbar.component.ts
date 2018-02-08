@@ -9,16 +9,16 @@ import { IPost } from "./../../steem/post.interface";
 })
 export class FeedTopbarComponent  {
     @Input() post: IPost;
-    @Output() account: EventEmitter<string>;
+    @Output() author: EventEmitter<string>;
     @Output() tag: EventEmitter<string>;
 
     constructor() {
-        this.account = new EventEmitter<string>();
+        this.author = new EventEmitter<string>();
         this.tag = new EventEmitter<string>();
     }
 
     onAccount(): void {
-        this.account.emit(this.post.author);
+        this.author.emit(this.post.author);
     }
 
     onTag(): void {
