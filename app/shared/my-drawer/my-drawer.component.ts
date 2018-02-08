@@ -3,7 +3,7 @@ import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout/stack-layo
 import { FeedUtilityService } from "./../../home/feed-utility.service";
 import { SettingsService } from "./../../shared/settings.service";
 import { SteemService } from "./../../steem.service";
-import { IAccounts } from "./../../steem/account.interface";
+import { IAccount, IAccounts } from "./../../steem/account.interface";
 
 /* ***********************************************************
 * Keep data that is displayed in your app drawer in the MyDrawer component class.
@@ -37,21 +37,22 @@ export class MyDrawerComponent implements OnInit {
         this.settings.getAccountName().subscribe((accountName: string) => {
             this.account = accountName;
             this.avatarURL = `https://steemitimages.com/u/${accountName}/avatar`;
+
+            this.steem.getAccount(this.settings.accountName).subscribe((res: IAccounts) => {
+                const account: IAccount = res.result[0];
+                account.metadata = JSON.parse(account.json_metadata);
+
+                this.reputation = this.feedUtility.getAuthorReputation(account.reputation);
+                this.backgroundURL = `url('${prefix}${account.metadata.profile.cover_image}')`;
+                this.avatarURL = `https://steemitimages.com/u/${this.account}/avatar`;
+
+                this.settings.accountCover = account.metadata.profile.cover_image;
+            });
         });
 
         this.settings.getAccountCover().subscribe((cover: string) => {
             this.backgroundURL = `url('${prefix}${cover}')`;
         });
-
-        // this.steem.getAccount(this.settings.accountName).subscribe((res: IAccounts) => {
-        //     this.account = res.result[0].name;
-        //     this.reputation = this.feedUtility.getAuthorReputation(res.result[0].reputation);
-        //     res.result[0].metadata = JSON.parse(res.result[0].json_metadata);
-        //     const bg = `url('${prefix}${res.result[0].metadata.profile.cover_image}')`;
-        //     this.backgroundURL = bg;
-        //     this.settings.accountCover = res.result[0].metadata.profile.cover_image;
-        //     this.avatarURL = `https://steemitimages.com/u/${this.account}/avatar`;
-        // });
     }
 
     isPageSelected(pageTitle: string): boolean {

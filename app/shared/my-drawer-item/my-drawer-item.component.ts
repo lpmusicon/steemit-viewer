@@ -15,6 +15,7 @@ export class MyDrawerItemComponent implements OnInit {
     @Input() route: string;
     @Input() icon: string;
     @Input() isSelected: boolean;
+    @Input() isDisabled: boolean;
 
     constructor(private routerExtensions: RouterExtensions) {
 
@@ -27,6 +28,10 @@ export class MyDrawerItemComponent implements OnInit {
     }
 
     onNavItemTap(navItemRoute: string): void {
+        if (this.isDisabled) {
+            return;
+        }
+
         this.routerExtensions.navigate([navItemRoute], {
             transition: {
                 name: "fade"

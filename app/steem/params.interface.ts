@@ -1,4 +1,4 @@
-import { FeedMethods } from "./feed.interface";
+import { FeedMethods, Methods, MiscMethods } from "./common.interface";
 
 export interface IFeedParams {
     limit: number;
@@ -15,6 +15,6 @@ export interface IFeedRequest extends ISteemRequest {
 export interface ISteemRequest {
     id: number;
     jsonrpc: string;
-    method: string;
+    method: Methods;
     params: Array<any>;
 }

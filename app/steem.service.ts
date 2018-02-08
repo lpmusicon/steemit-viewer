@@ -3,9 +3,11 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { SettingsService } from "./shared/settings.service";
 import { IAccounts } from "./steem/account.interface";
-import { FeedMethods, IFeed } from "./steem/feed.interface";
+import { FeedMethods, MiscMethods } from "./steem/common.interface";
+import { IFeed } from "./steem/feed.interface";
 import { IFeedParams } from "./steem/params.interface";
 import { IPost } from "./steem/post.interface";
+import { ITagResponse } from "./steem/tag.interface";
 
 @Injectable()
 export class SteemService {
@@ -117,6 +119,15 @@ export class SteemService {
                 "get_accounts",
                 [[account]]
             ]
+        });
+    }
+
+    getTags(): Observable<ITagResponse> {
+        return this.http.post<ITagResponse>(this.steemitAPI, {
+            id: 3,
+            jsonrpc: "2.0",
+            method: MiscMethods.getTrendingTags,
+            params: [ null, 50 ]
         });
     }
 }

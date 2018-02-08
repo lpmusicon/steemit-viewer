@@ -10,7 +10,8 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 import { Observable } from "rxjs/Observable";
 import { FeedUtilityService } from "./../home/feed-utility.service";
-import { FeedMethods, IFeed } from "./../steem/feed.interface";
+import { FeedMethods } from "./../steem/common.interface";
+import { IFeed } from "./../steem/feed.interface";
 import { IFeedParams, IFeedRequest, ISteemRequest } from "./../steem/params.interface";
 
 @Injectable()
