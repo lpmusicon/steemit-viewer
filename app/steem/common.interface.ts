@@ -15,7 +15,7 @@ export enum FeedMethods {
 export enum MiscMethods {
     getTrendingTags = "get_trending_tags",
     call = "call",
-    getAccountsReputation = ""
+    getState = "get_state"
 }
 
 export type Methods = MiscMethods | FeedMethods;

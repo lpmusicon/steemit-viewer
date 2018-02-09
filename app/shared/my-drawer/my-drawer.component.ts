@@ -37,21 +37,26 @@ export class MyDrawerComponent implements OnInit {
         this.settings.getAccountName().subscribe((accountName: string) => {
             this.account = accountName;
             this.avatarURL = `https://steemitimages.com/u/${accountName}/avatar`;
-
-            this.steem.getAccount(this.settings.accountName).subscribe((res: IAccounts) => {
-                const account: IAccount = res.result[0];
-                account.metadata = JSON.parse(account.json_metadata);
-
-                this.reputation = this.feedUtility.getAuthorReputation(account.reputation);
-                this.backgroundURL = `url('${prefix}${account.metadata.profile.cover_image}')`;
-                this.avatarURL = `https://steemitimages.com/u/${this.account}/avatar`;
-
-                this.settings.accountCover = account.metadata.profile.cover_image;
-            });
         });
 
         this.settings.getAccountCover().subscribe((cover: string) => {
             this.backgroundURL = `url('${prefix}${cover}')`;
+        });
+
+        this.settings.getAccountReputation().subscribe((rep: number) => {
+            this.reputation = rep;
+        });
+
+        this.steem.getAccount(this.settings.accountName).subscribe((res: IAccounts) => {
+            const account: IAccount = res.result[0];
+            account.metadata = JSON.parse(account.json_metadata);
+            const rep = this.feedUtility.getAuthorReputation(account.reputation);
+            this.reputation = rep;
+            this.backgroundURL = `url('${prefix}${account.metadata.profile.cover_image}')`;
+            this.avatarURL = `https://steemitimages.com/u/${this.account}/avatar`;
+
+            this.settings.accountCover = account.metadata.profile.cover_image;
+            this.settings.accountReputation = rep;
         });
     }
 

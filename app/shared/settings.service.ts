@@ -30,10 +30,6 @@ export class SettingsService {
         });
     }
 
-    get accountCover(): string {
-        return NSAppSettings.getString("accountCover", null);
-    }
-
     set accountCover(cover: string) {
         NSAppSettings.setString("accountCover", cover);
     }
@@ -44,6 +40,18 @@ export class SettingsService {
 
     set currentPost(post: IPost) {
         NSAppSettings.setString("currentPost", JSON.stringify(post));
+    }
+
+    set accountReputation(reputation: number) {
+        NSAppSettings.setNumber("accountReputation", reputation);
+    }
+
+    getAccountReputation(): Observable<number> {
+        return Observable.create((observer: Observer<number>) => {
+            const rep = NSAppSettings.getNumber("accountReputation", null);
+            observer.next(rep);
+            observer.complete();
+        });
     }
 
     clear(): void {

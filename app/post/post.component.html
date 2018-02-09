@@ -1,8 +1,6 @@
 <ActionBar class="action-bar">
     <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
-        ios.position="left">
-    </ActionItem>
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left"></ActionItem>
     <StackLayout orientation="horizontal" class="topBar">
         <WebImage class="avatarImage" rounded="true" src="https://steemitimages.com/u/{{ post?.author }}/avatar"></WebImage>
         <Label class="center" [text]="post?.author"></Label>
@@ -13,9 +11,17 @@
     <StackLayout tkDrawerContent>
         <MyDrawer [selectedPage]=""></MyDrawer>
     </StackLayout>
-    <GridLayout orientation="vertical" class="page page-content" tkMainContent columns="*, *, *" rows="auto, auto, auto">
-        <Label col="0" colSpan="3" row="0" class="margin title" [text]="post.title" textWrap="true"></Label>
-        <WebView col="0" colSpan="3" row="1" class="webView" (loadStarted)="onLoadStarted()" #webView [src]="body"></WebView>
-        <Button col="0" row="2" (tap)="onShare($event)" text="Share"></Button>
-    </GridLayout>
+    <ScrollView orientation="vertical" tkMainContent>
+        <GridLayout class="page page-content" tkMainContent columns="*, *, *" rows="auto, auto, auto, auto, auto">
+            <Label col="0" colSpan="3" row="0" class="margin title" [text]="post.title" textWrap="true"></Label>
+            <Label col="0" row="1" class="" [text]="post.pending_payout_value" textWrap="true"></Label>
+            <Label class="" col="1" row="1" [text]="post.active_votes.length"></Label>
+            <Label class="" col="2" row="1" [text]="post.children"></Label>
+            <WebView col="0" colSpan="3" row="2" class="webView" (loadStarted)="onLoadStarted()" #webView [src]="body"></WebView>
+            <Button col="0" row="3" (tap)="onShare($event)" text="Share"></Button>
+            <StackLayout col="0" colSpan="3" row="4" orientation="vertical">
+                <FeedComment row="3" col="1" [comments]="comments"></FeedComment>
+            </StackLayout>
+        </GridLayout>
+    </ScrollView>
 </RadSideDrawer>

@@ -8,6 +8,7 @@ import { IFeed } from "./steem/feed.interface";
 import { IFeedParams } from "./steem/params.interface";
 import { IPost } from "./steem/post.interface";
 import { ITagResponse } from "./steem/tag.interface";
+import { IStateResponse } from "./steem/state.interface";
 
 @Injectable()
 export class SteemService {
@@ -128,6 +129,15 @@ export class SteemService {
             jsonrpc: "2.0",
             method: MiscMethods.getTrendingTags,
             params: [ null, 50 ]
+        });
+    }
+
+    getState(uri: string): Observable<IStateResponse> {
+        return this.http.post<IStateResponse>(this.steemitAPI, {
+            id: 4,
+            jsonrpc: "2.0",
+            method: MiscMethods.getState,
+            params: [uri]
         });
     }
 }

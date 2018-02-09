@@ -2,6 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptUIListViewModule } from "nativescript-pro-ui/listview/angular";
 import { NativeScriptUISideDrawerModule } from "nativescript-pro-ui/sidedrawer/angular";
+import { FeedCommentComponent } from "./feed-comment/feed-comment.component";
 import { FeedSocialFooterComponent } from "./feed-social-footer/feed-social-footer.component";
 import { FeedThumbnailComponent } from "./feed-thumbnail/feed-thumbnail.component";
 import { FeedTopbarComponent } from "./feed-topbar/feed-topbar.component";
@@ -19,7 +20,8 @@ import { MyDrawerComponent } from "./my-drawer/my-drawer.component";
         MyDrawerItemComponent,
         FeedThumbnailComponent,
         FeedTopbarComponent,
-        FeedSocialFooterComponent
+        FeedSocialFooterComponent,
+        FeedCommentComponent
     ],
     exports: [
         MyDrawerComponent,
@@ -27,7 +29,8 @@ import { MyDrawerComponent } from "./my-drawer/my-drawer.component";
         NativeScriptUIListViewModule,
         FeedThumbnailComponent,
         FeedTopbarComponent,
-        FeedSocialFooterComponent
+        FeedSocialFooterComponent,
+        FeedCommentComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
