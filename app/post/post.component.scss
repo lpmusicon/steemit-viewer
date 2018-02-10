@@ -15,9 +15,45 @@
 
 .margin {
     margin: 12 12 0 12;
+    vertical-align: center;
+}
+
+.mtop {
+    margin: 12 0 0 0;
 }
 
 .title {
     font-size: 18;
     line-height: 14;
+}
+
+.sa {
+    width: 32;
+    height: 32;
+}
+
+.ra {
+    text-align: right;
+}
+
+.ca {
+    text-align: center;
+}
+
+.comments {
+    margin: 8 16 8 8;
+}
+
+.cheader {
+    margin: 8;
+    font-size: 18;
+}
+
+.cload {
+    margin: 8;
+    font-size: 16;
+}
+
+Button {
+    background: #263238;
 }

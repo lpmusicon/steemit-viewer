@@ -68,7 +68,7 @@ export class HotComponent implements OnInit {
         const index = event.index;
         const item: IPost = this.feed.getItem(index);
         this.settings.currentPost = item;
-        this.routerExtensions.navigate(["/post/", item.author, item.permlink, item.metadata.tags[0]]);
+        this.routerExtensions.navigate(["/post/", item.author, item.permlink, item.category]);
     }
 
     onTag(tag: string): void {

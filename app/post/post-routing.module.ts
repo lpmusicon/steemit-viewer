@@ -5,7 +5,7 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { PostComponent } from "./post.component";
 
 const routes: Routes = [
-    { path: ":author/:perm", component: PostComponent },
+    { path: ":author/:perm/:category", component: PostComponent },
     { path: "**", redirectTo: "/", pathMatch: "full"}
 ];
 

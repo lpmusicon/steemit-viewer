@@ -5,6 +5,7 @@ export interface IPost {
     author: string;
     permlink: string;
     category: string;
+    children: number;
     parent_author: string;
     parent_permlink: string;
     title: string;
@@ -19,10 +20,13 @@ export interface IPost {
     root_title: string;
     pending_payout_value: string;
     author_reputation: string;
+    depth: number;
+    replies: Array<string>;
     // ADDED BY APP
     thumbnail: string;
     metadata: IPostMetadata;
     author_reputation_formatted?: number;
+    post_replies: Array<IPost>;
 }
 export interface IPostVote {
     voter: VoterName;

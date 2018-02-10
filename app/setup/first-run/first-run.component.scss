@@ -4,22 +4,24 @@
 }
 
 .button {
-    background: #F0F0F0;
+    background: #263238;
 }
 
 .page {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    background: darken(#263238, 10%);
 }
 
 .inner {
     padding: 16;
-    border-radius: 0;
-    border-width: 1;
-    border-color: #333333;
+    background: darken(#263238, 5%);
 }
 
 .element {
     padding: 16 0 16 0;
+}
+
+.field {
+    color: #cccccc;
+    placeholder-color: #aaaaaa;
+    border-bottom-color: #aaaaaa;
 }

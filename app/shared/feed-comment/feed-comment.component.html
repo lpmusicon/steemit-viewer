@@ -1,0 +1,9 @@
+<GridLayout *ngFor="let comment of comments" rows="auto, auto, auto" columns="auto, *, auto">
+    <WebImage row="0" col="0" rowSpan="2" rounded="true" class="sa" placeholder="res://ic_account_circle_white_48dp" src="https://steemitimages.com/u/{{ comment?.author }}/avatar/small"></WebImage>
+    <Label row="0" col="1" class="author" [text]="comment?.author"></Label>
+    <Label row="0" col="2" [text]="comment.pending_payout_value"></Label>
+    <WebView (loadFinished)="webViewLoaded($event)" row="1" col="1" [src]="webView(comment.body)"></WebView>
+    <StackLayout row="2" col="0" colSpan="3" orientation="vertical">
+        <FeedComment *ngIf="comment?.post_replies" [comments]="comment.post_replies"></FeedComment>
+    </StackLayout>
+</GridLayout>
