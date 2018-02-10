@@ -12,15 +12,20 @@
         <MyDrawer [selectedPage]=""></MyDrawer>
     </StackLayout>
     <ScrollView orientation="vertical" tkMainContent>
-        <GridLayout class="page page-content" tkMainContent columns="*, *, *" rows="auto, auto, auto, auto, auto">
-            <Label col="0" colSpan="3" row="0" class="margin title" [text]="post.title" textWrap="true"></Label>
-            <Label col="0" row="1" class="" [text]="post.pending_payout_value" textWrap="true"></Label>
-            <Label class="" col="1" row="1" [text]="post.active_votes.length"></Label>
-            <Label class="" col="2" row="1" [text]="post.children"></Label>
-            <WebView col="0" colSpan="3" row="2" class="webView" (loadStarted)="onLoadStarted()" #webView [src]="body"></WebView>
-            <Button col="0" row="3" (tap)="onShare($event)" text="Share"></Button>
-            <StackLayout col="0" colSpan="3" row="4" orientation="vertical">
-                <FeedComment row="3" col="1" [comments]="comments"></FeedComment>
+        <GridLayout class="page page-content" tkMainContent columns="auto, *, auto, *, *" rows="auto, auto, auto, auto, auto, auto">
+            <Label col="0" row="0" colSpan="6" class="margin title" textWrap="true" [text]="post.title"></Label>
+            <Label col="0" row="1" class="fa margin" text="&#xf164;"></Label>
+            <Label col="1" row="1" class="mtop" [text]="post.active_votes.length"></Label>
+            <Label col="2" row="1" class="fa margin" text="&#xf27a;"></Label>
+            <Label col="3" row="1" class="mtop" [text]="post.children"></Label>
+            <Label col="4" row="1" class="fa margin" text="&#xf05a;"></Label>
+            <Label col="5" row="1" class="margin ra" textWrap="true" [text]="post.pending_payout_value"></Label>
+            <WebView col="0"row="2" colSpan="6" class="webView" #webView [src]="body" (loadStarted)="onLoadStarted()"></WebView>
+            <Button col="0" row="3" colSpan="6" class="margin" text="Share" (tap)="onShare($event)"></Button>
+            <StackLayout col="0" row="4" colSpan="6" orientation="vertical" class="comments">
+                <Label class="cheader" text="Comments:"></Label>
+                <Label class="cload" text="Comments are hidden. Click to load" (tap)="showComments()" *ngIf="!loadedComments"></Label>
+                <FeedComment col="1" row="3" [comments]="comments"></FeedComment>
             </StackLayout>
         </GridLayout>
     </ScrollView>

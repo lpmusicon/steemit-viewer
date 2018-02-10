@@ -26,10 +26,10 @@ export class FirstRunComponent implements OnInit {
         private routerExtensions: RouterExtensions) {}
 
     ngOnInit(): void {
-        this.page.backgroundImage = "res://bg";
-        this.page.style.backgroundPosition = "center";
-        this.page.style.backgroundSize = "cover";
-        this.page.style.backgroundRepeat = "no-repeat";
+        this.page.background = "#11171a";
+        // this.page.style.backgroundPosition = "center";
+        // this.page.style.backgroundSize = "cover";
+        // this.page.style.backgroundRepeat = "no-repeat";
         this.page.actionBarHidden = true;
     }
 

@@ -12,13 +12,8 @@ export class FeedCommentComponent {
     @Input() comments: Array<IPost>;
 
     webView(body: string): string {
-        return `<html><head>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script>
-        <style>a {pointer-events:none;} html, body {margin: 0; width: 100vw; overflow-x: hidden; }
-        img { display: block; width: 100%; height: auto; }</style></head>
-        <body>${body}</body>`
-        + `<script>document.body.innerHTML = (new showdown.Converter()).makeHtml(document.body.innerHTML);
-        </script></html>`;
+        // tslint:disable-next-line:max-line-length
+        return `<html><head><script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script><style>a {pointer-events:none;} html, body {margin: 0; width: 100vw; overflow-x: hidden; background: #11171a; color: #cccccc; } a:link { color: #cccccc } img { display: block; width: 100%; height: auto; }</style></head><body>${body}</body><script>document.body.innerHTML = (new showdown.Converter()).makeHtml(document.body.innerHTML);</script></html>`;
     }
 
     webViewLoaded(args) {

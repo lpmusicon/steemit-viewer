@@ -8,7 +8,7 @@
 
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
     <StackLayout tkDrawerContent><MyDrawer [selectedPage]="pageName"></MyDrawer></StackLayout>
-    <StackLayout orientation="vertical" tkMainContent>
+    <StackLayout orientation="vertical" class="page page-content" tkMainContent>
         <StackLayout class="filter" orientation="horizontal" *ngIf="currentTag !== ''">
             <Label class="text" text="Browsing tag: "></Label>
             <StackLayout (tap)="onTagReset()" orientation="horizontal">

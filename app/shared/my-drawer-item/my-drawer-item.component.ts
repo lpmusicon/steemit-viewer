@@ -21,10 +21,7 @@ export class MyDrawerItemComponent implements OnInit {
 
     }
 
-    ngOnInit(): void {
-        /* ***********************************************************
-        * Use the MyDrawerItemComponent "onInit" event handler to initialize the properties data values.
-        *************************************************************/
+    ngOnInit(): void {//
     }
 
     onNavItemTap(navItemRoute: string): void {

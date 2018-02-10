@@ -1,9 +1,4 @@
 GridLayout {
-    border-bottom-width: 1;
-    border-bottom-color: #DDDDDD;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-style: solid;
     .avatarImage {
         width: 36;
         height: 36;
@@ -18,7 +13,7 @@ GridLayout {
             vertical-align: top;
         }
         &.fl {
-            color: #333333;
+            color: #dddddd;
         }
         &.align-right {
             text-align: right;

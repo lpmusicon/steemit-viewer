@@ -33,17 +33,17 @@ export class PostComponent implements OnInit {
     post: IPost;
     comments: Array<IPost>;
     body: string;
+    loadedComments: boolean;
     private uri: string;
     private params: IPostInterface;
     private _sideDrawerTransition: DrawerTransitionBase;
-
     private temp: Array<Array<IPost>> = [];
-    private tempC: Array<IComment> = [];
     constructor(
         private pageRoute: PageRoute,
         private settings: SettingsService,
         private steem: SteemService) {
             this.comments = [];
+            this.loadedComments = false;
         }
 
     sortByDepth(replies: Array<IPost>, depth: number): void {
@@ -78,8 +78,28 @@ export class PostComponent implements OnInit {
                 }
             });
         });
+    }
 
-        console.log("Added D:", depth);
+    showComments() {
+        const rootPath: string = `/${this.params.category}/@${this.params.author}/${this.params.perm}`;
+        this.steem.getState(rootPath).subscribe(
+        (res: IStateResponse) => {
+            const obj: Array<IPost> =  res.result.content;
+            let x = 0;
+            while (Object.keys(obj).length > 0) {
+                this.sortByDepth(obj,  x);
+                x++;
+            }
+            console.log("SORTED: ", JSON.stringify(Object.keys(this.temp)));
+
+            this.sortByDepth(obj, 0);
+            for (let i = (this.temp.length - 1); i > 0; i--) {
+                this.addToReplies(i);
+            }
+
+            this.comments = this.temp[0][0].post_replies;
+            this.loadedComments = true;
+        });
     }
 
     ngOnInit(): void {
@@ -90,27 +110,6 @@ export class PostComponent implements OnInit {
                 this.post = this.settings.currentPost;
                 this.body = this.post.body;
                 this.params = params;
-
-                const rootPath: string = `/${params.category}/@${params.author}/${params.perm}`;
-                this.steem.getState(rootPath).subscribe(
-                (res: IStateResponse) => {
-                    setTimeout(() => {
-                        const obj: Array<IPost> =  res.result.content;
-                        let x = 0;
-                        while (Object.keys(obj).length > 0) {
-                            this.sortByDepth(obj,  x);
-                            x++;
-                        }
-                        console.log("SORTED: ", JSON.stringify(Object.keys(this.temp)));
-
-                        this.sortByDepth(obj, 0);
-                        for (let i = (this.temp.length - 1); i > 0; i--) {
-                            this.addToReplies(i);
-                        }
-
-                        this.comments = this.temp[0][0].post_replies;
-                    }, 1000);
-                });
             });
         });
 
@@ -118,13 +117,8 @@ export class PostComponent implements OnInit {
     }
 
     webView(body: string): string {
-        return `<html><head>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script>
-        <style>a {pointer-events:none;} html, body {margin: 0; width: 100vw; overflow-x: hidden; }
-        img { display: block; width: 100%; height: auto; }</style></head>
-        <body>${body}</body>
-        <script>document.body.innerHTML = (new showdown.Converter()).makeHtml(document.body.innerHTML);</script>
-        </html>`;
+        // tslint:disable-next-line:max-line-length
+        return `<html><head><script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js"></script><style>a {pointer-events:none;} html, body {margin: 0; width: 100vw; overflow-x: hidden; background: #11171a; color: #cccccc; } a:link { color: #cccccc } img { display: block; width: 100%; height: auto; }</style></head><body>${body}</body><script>document.body.innerHTML = (new showdown.Converter()).makeHtml(document.body.innerHTML);</script></html>`;
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {

@@ -7,8 +7,8 @@ import { FeedMethods, MiscMethods } from "./steem/common.interface";
 import { IFeed } from "./steem/feed.interface";
 import { IFeedParams } from "./steem/params.interface";
 import { IPost } from "./steem/post.interface";
-import { ITagResponse } from "./steem/tag.interface";
 import { IStateResponse } from "./steem/state.interface";
+import { ITagResponse } from "./steem/tag.interface";
 
 @Injectable()
 export class SteemService {

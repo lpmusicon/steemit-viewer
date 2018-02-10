@@ -8,7 +8,7 @@
 
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
     <StackLayout tkDrawerContent><MyDrawer [selectedPage]="pageName"></MyDrawer></StackLayout>
-    <StackLayout orientation="vertical" tkMainContent>
+    <StackLayout orientation="vertical" class="page page-content" tkMainContent>
         <RadListView [items]="feed" (itemTap)="onClick($event)">
             <ng-template tkListItemTemplate let-item="item">
                 <Label class="nameLabel" [text]="item.name" textWrap="true"></Label>

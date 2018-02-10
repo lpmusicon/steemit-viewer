@@ -54,6 +54,18 @@ export class SettingsService {
         });
     }
 
+    getDarkMode(): Observable<boolean> {
+        return Observable.create((observer: Observer<boolean>) => {
+            const isDark = NSAppSettings.getBoolean("darkMode", false);
+            observer.next(isDark);
+            observer.complete();
+        });
+    }
+
+    set darkMode(isDark: boolean) {
+        NSAppSettings.setBoolean("darkMode", isDark);
+    }
+
     clear(): void {
         NSAppSettings.clear();
     }
