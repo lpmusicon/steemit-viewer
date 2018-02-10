@@ -1,0 +1,23 @@
+GridLayout {
+    .avatarImage {
+        width: 36;
+        height: 36;
+        margin: 8;
+        vertical-align: center;
+    }
+    Label {
+        &.bottom {
+            vertical-align: bottom;
+        }
+        &.top {
+            vertical-align: top;
+        }
+        &.fl {
+            color: #dddddd;
+        }
+        &.align-right {
+            text-align: right;
+            margin-right: 8;
+        }
+    }
+}

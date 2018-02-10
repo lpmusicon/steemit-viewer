@@ -10,14 +10,16 @@ Feel free to customize layouts and components to change how your app drawer look
             <Label class="footnote" text="@{{ account }}"></Label>
         </StackLayout>
     </StackLayout>
-
     <ScrollView row="1">
         <StackLayout class="sidedrawer-content">
+            <MyDrawerItem title="Blog" route="/home/blog" icon="&#xf015;" [isSelected]="isPageSelected('Blog')"></MyDrawerItem>
+            <StackLayout class="hr hr-dark"></StackLayout>
             <MyDrawerItem title="Feed" route="/home" icon="&#xf015;" [isSelected]="isPageSelected('Feed')"></MyDrawerItem>
             <MyDrawerItem title="Hot" route="/home/hot" icon="&#xf06d;" [isSelected]="isPageSelected('Hot')"></MyDrawerItem>
-            <MyDrawerItem title="Trending" route="/home/trending" icon="&#xf1ea;" [isSelected]="isPageSelected('Trending')"></MyDrawerItem>
+            <MyDrawerItem title="Trending" route="/home/trending" icon="&#xf27a;" [isSelected]="isPageSelected('Trending')"></MyDrawerItem>
             <MyDrawerItem title="New" route="/home/new" icon="&#xf0f3;" [isSelected]="isPageSelected('New')"></MyDrawerItem>
-            <StackLayout class="hr-light"></StackLayout>
+            <MyDrawerItem title="Tags" route="/home/tags" icon="&#xf02c;" [isSelected]="isPageSelected('Tags')"></MyDrawerItem>
+            <StackLayout class="hr hr-dark"></StackLayout>
             <MyDrawerItem title="Settings" route="/settings" icon="&#xf013;" [isSelected]="isPageSelected('Settings')"></MyDrawerItem>
         </StackLayout>
     </ScrollView>

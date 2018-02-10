@@ -1,0 +1,13 @@
+GridLayout {
+    margin-left: 8;
+    margin-right: 8;
+    margin-bottom: 8;
+    Label {
+        &.mr { margin-right: 8; }
+        &.fa { font-size: 26; }
+        &.likes, &.comments {
+            font-size: 18;
+            vertical-align: center;
+        }
+    }
+}

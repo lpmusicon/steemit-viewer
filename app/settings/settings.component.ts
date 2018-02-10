@@ -1,27 +1,28 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { RouterExtensions } from "nativescript-angular/router";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
 import { EventData } from "tns-core-modules/data/observable/observable";
-import { SteemService } from './../steem.service';
-import { RouterExtensions } from "nativescript-angular/router";
+import { Switch } from "ui/switch";
+import { SettingsService } from "./../shared/settings.service";
+import { SteemService } from "./../steem.service";
 
 @Component({
     selector: "Settings",
     moduleId: module.id,
-    templateUrl: "./settings.component.html"
+    templateUrl: "./settings.component.html",
+    styleUrls: ["./settings.component.scss"]
 })
 export class SettingsComponent implements OnInit {
-    /* ***********************************************************
-    * Use the @ViewChild decorator to get a reference to the drawer component.
-    * It is used in the "onDrawerButtonTap" function below to manipulate the drawer.
-    *************************************************************/
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
 
     private _sideDrawerTransition: DrawerTransitionBase;
 
-    /* ***********************************************************
-    * Use the sideDrawerTransition property to change the open/close animation of the drawer.
-    *************************************************************/
+    constructor(
+        private steem: SteemService,
+        private settings: SettingsService,
+        private routerExtensions: RouterExtensions) {}
+
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
     }
@@ -30,17 +31,25 @@ export class SettingsComponent implements OnInit {
         return this._sideDrawerTransition;
     }
 
-    constructor(private steem: SteemService, private routerExtensions: RouterExtensions) {}
+    onDarkMode(args) {
+        const darkMode = <Switch>args.object;
+        this.settings.darkMode = darkMode.checked;
 
-    public onReset(event: EventData) {
-        this.steem.resetAll();
-        this.routerExtensions.navigate(['/home'], { clearHistory: true });
+        if (darkMode.checked) {
+            require("application").setCssFileName("dark.css");
+            const frame = require("ui/frame").topmost();
+            if (frame && frame.currentPage) {
+                (<any>frame.currentPage)._onCssStateChange();
+                console.log("Hello");
+            }
+        }
     }
 
-    /* ***********************************************************
-    * According to guidelines, if you have a drawer on your page, you should always
-    * have a button that opens it. Use the showDrawer() function to open the app drawer section.
-    *************************************************************/
+    onReset(event: EventData) {
+        this.settings.clear();
+        this.routerExtensions.navigate(["/home"], { clearHistory: true });
+    }
+
     onDrawerButtonTap(): void {
         this.drawerComponent.sideDrawer.showDrawer();
     }

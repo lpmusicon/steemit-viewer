@@ -1,0 +1,6 @@
+<GridLayout columns="auto, auto, auto, auto">
+    <Label class="fa mr" col="0" text="&#xf164;"></Label>
+    <Label class="likes mr" col="1" [text]="item.active_votes.length" textWrap="true"></Label>
+    <Label class="fa mr" col="2" text="&#xf27a;"></Label>
+    <Label class="comments" col="3" [text]="item.children" textWrap="true"></Label>
+</GridLayout>

@@ -1,18 +1,16 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { PageRoute, RouterExtensions } from "nativescript-angular/router";
+import { ListViewEventData } from "nativescript-pro-ui/listview";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
-import { RadListViewComponent } from "nativescript-pro-ui/listview/angular"
-import { ListViewEventData } from "nativescript-pro-ui/listview";
-import { Observable } from "tns-core-modules/ui/frame/frame";
-import { RouterExtensions } from "nativescript-angular/router";
 import { ObservableArray } from "tns-core-modules/data/observable-array/observable-array";
-import * as imageSource from "image-source";
-import * as htmlViewModule from "tns-core-modules/ui/html-view";
-
+import { SettingsService } from "./../../shared/settings.service";
 import { SteemService } from "./../../steem.service";
-import { FeedInterface, FeedElementInterface } from './../../steem/feed.interface';
-import { FeedUtilityService } from './../feed-utility.service';
-import { EventData } from "tns-core-modules/ui/editable-text-base/editable-text-base";
+import { IFeed } from "./../../steem/feed.interface";
+import { IPost } from "./../../steem/post.interface";
+import { IRouteParams } from "./../route-params.interface";
 
 @Component({
     selector: "Hot",
@@ -21,69 +19,84 @@ import { EventData } from "tns-core-modules/ui/editable-text-base/editable-text-
     styleUrls: ["./hot.component.scss"]
 })
 export class HotComponent implements OnInit {
-    @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
-    public pageName: string;
-    public currentFeed: ObservableArray<any>;
-    public currentTag: string;
+    pageName: string;
+    feed: ObservableArray<any>;
+    currentTag: string;
     private _sideDrawerTransition: DrawerTransitionBase;
+    @ViewChild("drawer") private drawerComponent: RadSideDrawerComponent;
 
     constructor(
         private steem: SteemService,
-        private feedUtility: FeedUtilityService,
+        private settings: SettingsService,
+        private pageRoute: PageRoute,
         private routerExtensions: RouterExtensions) {
             this.pageName = "Hot";
-            this.currentTag = "";
         }
 
-    public ngOnInit(): void {
+    ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
-        this.getInitialFeed();
-    }
-
-    private getInitialFeed(): void {
-        this.steem.getHot(this.currentTag).subscribe((data: FeedInterface) => {
-            this.feedUtility.formatFeedData(data.result);
-            this.currentFeed = new ObservableArray(data.result);
-        }, (error) => {
-            console.log('BACK OFF');
+        this.pageRoute.activatedRoute.subscribe((activatedRoute: ActivatedRoute) => {
+            activatedRoute.params.subscribe((params: IRouteParams) => {
+                this.currentTag = params.hasOwnProperty("tag") ? params.tag : "";
+                this.getFeed();
+            });
         });
     }
 
-    public get sideDrawerTransition(): DrawerTransitionBase {
+    get sideDrawerTransition(): DrawerTransitionBase {
         return this._sideDrawerTransition;
     }
 
-    public onDrawerButtonTap(): void {
+    onDrawerButtonTap(): void {
         this.drawerComponent.sideDrawer.showDrawer();
     }
 
-    public onLoadMore(event: ListViewEventData): void {
-        const LastFromFeed = this.currentFeed.getItem(this.currentFeed.length - 1) as FeedElementInterface;
-        this.steem.getHot(this.currentTag, LastFromFeed.author, LastFromFeed.permlink).subscribe((feed: FeedInterface) => {
-            feed.result.shift(); //Removing duplicate element
-            this.feedUtility.formatFeedData(feed.result);
-            feed.result.forEach((element: FeedElementInterface) => this.currentFeed.push(element));
+    onLoadMore(event: ListViewEventData): void {
+        const lastFeed: IPost = this.feed.getItem(this.feed.length - 1);
+        this.steem.getHot(this.currentTag, lastFeed.author, lastFeed.permlink).subscribe(
+        (feed: IFeed) => {
+            feed.result.forEach((element: IPost) => this.feed.push(element));
             event.object.notifyLoadOnDemandFinished();
-        }, (error) => {
-            console.log('Error happend:', JSON.stringify(error));
+        },
+        (error: HttpErrorResponse) => {
+            this.onDownloadError(error);
             event.object.notifyLoadOnDemandFinished();
         });
     }
 
-    public onClick(event: ListViewEventData): void {
-        const Index = event.index;
-        const Item = this.currentFeed.getItem(Index) as FeedElementInterface;
-        this.steem.setPost(Item);
-        this.routerExtensions.navigate(['/post/', Item.author, Item.permlink]);
+    onClick(event: ListViewEventData): void {
+        const index = event.index;
+        const item: IPost = this.feed.getItem(index);
+        this.settings.currentPost = item;
+        this.routerExtensions.navigate(["/post/", item.author, item.permlink, item.category]);
     }
 
-    public onTag(event: EventData, tag: string): void {
-        this.currentTag = tag;
-        this.getInitialFeed();
+    onTag(tag: string): void {
+        this.routerExtensions.navigate(["/home/hot/", tag]);
     }
 
-    public onTagReset(): void {
-        this.currentTag = "";
-        this.getInitialFeed();
+    onAuthor(author: string): void {
+        this.routerExtensions.navigate(["/home/blog/", author]);
+    }
+
+    onTagReset(): void {
+        this.routerExtensions.navigate(["/home/hot"]);
+    }
+
+    templateSelector(item: IPost, index: number, items: Array<IPost>): string {
+        return item.thumbnail === "" ? "no-image" : "image";
+    }
+
+    private getFeed(): void {
+        this.steem.getHot(this.currentTag).subscribe(
+        (data: IFeed) => {
+            this.feed = new ObservableArray(data.result);
+        },
+        (error: HttpErrorResponse) => this.onDownloadError(error));
+    }
+
+    private onDownloadError(error: HttpErrorResponse): void {
+        console.log("Network status: ", error.status);
+        console.log("for URL:", error.url);
     }
 }

@@ -1,0 +1,31 @@
+StackLayout.feedItem {
+    margin: 16 16 0 16;
+    background: #263238;
+
+    .nameLabel {
+        font-size: 18;
+        margin: 8;
+    }
+}
+
+.align-right {
+    text-align: right;
+}
+
+.tag-container {
+    margin: 0 6 0 12;
+
+    .tag {
+        font-weight: 300;
+        padding: 5;
+        margin: 0 2 0 2;
+        color: #6666FF;
+        vertical-align: center;
+    }
+}
+
+
+.nameLabel {
+    font-size: 18;
+    margin: 8;
+}

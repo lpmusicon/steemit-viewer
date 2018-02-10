@@ -1,0 +1,19 @@
+<ActionBar class="action-bar">
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
+        ios.position="left">
+    </ActionItem>
+    <Label class="action-bar-title" text="Trending Tags"></Label>
+</ActionBar>
+
+<RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
+    <StackLayout tkDrawerContent><MyDrawer [selectedPage]="pageName"></MyDrawer></StackLayout>
+    <StackLayout orientation="vertical" class="page page-content" tkMainContent>
+        <RadListView [items]="feed" (itemTap)="onClick($event)">
+            <ng-template tkListItemTemplate let-item="item">
+                <Label class="nameLabel" [text]="item.name" textWrap="true"></Label>
+            </ng-template>
+            <ListViewStaggeredLayout tkListViewLayout scrollDirection="Vertical" spanCount="2"></ListViewStaggeredLayout>
+        </RadListView>
+    </StackLayout>
+</RadSideDrawer>
