@@ -22,12 +22,14 @@
                     <FeedTopbar [post]="item" (author)="onAuthor($event)" (tag)="onTag($event)"></FeedTopbar>
                     <FeedThumbnail [src]="item.thumbnail"></FeedThumbnail>
                     <Label class="nameLabel" [text]="item.title" textWrap="true"></Label>
+                    <FeedSocialFooter [item]="item" (tap)="onTag($event)"></FeedSocialFooter>
                 </StackLayout>
             </ng-template>
             <ng-template let-item="item" tkTemplateKey="no-image">
                 <StackLayout orientation="vertical" class="feedItem">
                     <FeedTopbar [post]="item" (author)="onAuthor($event)" (tag)="onTag($event)"></FeedTopbar>
                     <Label class="nameLabel" [text]="item.title" textWrap="true"></Label>
+                    <FeedSocialFooter [item]="item" (tap)="onTag($event)"></FeedSocialFooter>
                 </StackLayout>
             </ng-template>
         </RadListView>
