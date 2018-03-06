@@ -4,7 +4,7 @@ import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-pro-u
 import { RadSideDrawerComponent } from "nativescript-pro-ui/sidedrawer/angular";
 import * as SocialShare from "nativescript-social-share";
 import { EventData } from "tns-core-modules/ui/editable-text-base/editable-text-base";
-import * as webViewModule from "tns-core-modules/ui/web-view";
+import { WebView } from "tns-core-modules/ui/web-view/web-view";
 import { SettingsService } from "./../shared/settings.service";
 import { SteemService } from "./../steem.service";
 import { IPost } from "./../steem/post.interface";
@@ -29,7 +29,6 @@ interface IComment {
 })
 export class PostComponent implements OnInit {
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
-    @ViewChild("webView") webviewRef: ElementRef;
     post: IPost;
     comments: Array<IPost>;
     body: string;
@@ -90,7 +89,6 @@ export class PostComponent implements OnInit {
                 this.sortByDepth(obj,  x);
                 x++;
             }
-            console.log("SORTED: ", JSON.stringify(Object.keys(this.temp)));
 
             this.sortByDepth(obj, 0);
             for (let i = (this.temp.length - 1); i > 0; i--) {
@@ -135,12 +133,11 @@ export class PostComponent implements OnInit {
             "via Steemit Viewer", "Share via:");
     }
 
-    onLoadStarted() {
-        const webView = this.webviewRef.nativeElement as webViewModule.WebView;
-        console.log("Android: ", webView.android);
-        if (webView.android) {
-            webView.android.getSettings().setDisplayZoomControls(false);
-            webView.android.getSettings().setBuiltInZoomControls(false);
+    onWebLoad(args) {
+        const webview: WebView = <WebView>args.object;
+        if (webview.android) {
+            webview.android.getSettings().setDisplayZoomControls(false);
+            webview.android.getSettings().setBuiltInZoomControls(false);
         }
     }
 }

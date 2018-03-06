@@ -20,7 +20,7 @@
             <Label col="3" row="1" class="mtop" [text]="post.children"></Label>
             <Label col="4" row="1" class="fa margin" text="&#xf05a;"></Label>
             <Label col="5" row="1" class="margin ra" textWrap="true" [text]="post.pending_payout_value"></Label>
-            <WebView col="0"row="2" colSpan="6" class="webView" #webView [src]="body" (loadStarted)="onLoadStarted()"></WebView>
+            <WebView col="0"row="2" colSpan="6" class="webView" [src]="body" (loadFinished)="onWebLoad($event)"></WebView>
             <Button col="0" row="3" colSpan="6" class="margin" text="Share" (tap)="onShare($event)"></Button>
             <StackLayout col="0" row="4" colSpan="6" orientation="vertical" class="comments">
                 <Label class="cheader" text="Comments:"></Label>

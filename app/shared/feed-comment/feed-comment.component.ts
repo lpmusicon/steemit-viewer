@@ -10,6 +10,7 @@ import { IPost } from "./../../steem/post.interface";
 })
 export class FeedCommentComponent {
     @Input() comments: Array<IPost>;
+    isVisible: boolean = false;
 
     webView(body: string): string {
         // tslint:disable-next-line:max-line-length

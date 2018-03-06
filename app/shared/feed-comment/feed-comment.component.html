@@ -4,6 +4,7 @@
     <Label row="0" col="2" [text]="comment.pending_payout_value"></Label>
     <WebView (loadFinished)="webViewLoaded($event)" row="1" col="1" [src]="webView(comment.body)"></WebView>
     <StackLayout row="2" col="0" colSpan="3" orientation="vertical">
-        <FeedComment *ngIf="comment?.post_replies" [comments]="comment.post_replies"></FeedComment>
+        <Label text="Replies are hidden. Tap to show" *ngIf="!isVisible"></Label>
+        <FeedComment *ngIf="comment?.post_replies && isVisible" [comments]="comment.post_replies"></FeedComment>
     </StackLayout>
 </GridLayout>
